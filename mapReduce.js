@@ -3,12 +3,44 @@ var cars = require("./cars1")
 var prodotti = require("./prodotti")
 var categorie = require("./categories")
 var ordini = require("./ordini")
-var clienti = require("./clienti") 
+var clienti = require("./clienti")
 
-categorie.map(c=>{c.idCat=c.id;delete c.id;c.descrCat=c.description;delete c.description;c.tipo=c.name; delete c.name })
-prodotti.map(p=>{p.idProd=p.id; delete p.id, delete p.discontinued; delete p.supplierId; delete p.quantityPerUnit; delete p.unitsOnOrder; delete p.reorderLevel})
+cars.map(c => { c.prezzo = parseInt(c.prezzo)})
+categorie.map(c => { c.idCat = c.id; delete c.id; c.descrCat = c.description; delete c.description; c.tipo = c.name; delete c.name })
+prodotti.map(p => { p.idProd = p.id; delete p.id, delete p.discontinued; delete p.supplierId; delete p.quantityPerUnit; delete p.unitsOnOrder; delete p.reorderLevel })
 
 
+
+
+//Proiezione
+console.log("Proiezione")
+//SELECT casa, modello anno FROM CARS
+
+console.log("SELECT casa, modello anno FROM CARS")
+let proiez = cars.map(c=>new Object({"casa":c.casa,"modello": c.modello, "anno":c.anno })).slice(0,20);
+//console.table(proiez)
+
+//Selezione
+console.log("Selezione")
+/*SELECT *
+ FROM cars
+ WHERE dispo<5
+*/
+console.log("SELECT* FROM cars WHERE dispo < 5")
+let selez = cars.filter(cc=>cc.dispo<5)
+//console.table(selez)
+
+//SORTING
+console.log("Sorting")
+
+/*
+SELECT * 
+FROM CARS 
+ORDERBY prezzo
+*/
+let sorted = cars.sort((a,b)=> ( b.prezzo - a.prezzo)).slice(0,20);
+console.log("SELECT * FROM cars ORDERBY prezzo DESC")
+//console.table( sorted)
 
 //------------------------------------
 // count
@@ -26,8 +58,11 @@ console.log("SELECT COUNT(*) FROM CARS", conta)
 
 
 let totm = cars.map(cc => cc.dispo).reduce((sum, cc) => sum + cc, 0);
+//oppure
+let totm_alt = cars.reduce((sum, cc) => sum + cc.dispo, 0);
 
-console.log("SELECT SUM(dispo) FROM CARS", totm)
+console.log("SELECT SUM(dispo) FROM cars", totm)
+console.log("SELECT SUM(dispo) FROM cars", totm_alt)
 
 
 // --------------------------------------------------
@@ -46,13 +81,13 @@ console.log("SELECT MIN(prezzo) FROM CARS", minPrezzo)
 
 // Average
 //SELECT AVG(prezzo) FROM CARS
-const avgPrezzo = cars.map(cc => parseInt(cc.prezzo)).reduce(function (r, p) { r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
+const avgPrezzo = cars.map(cc => cc.prezzo).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
 console.log("SELECT AVG(prezzo) FROM CARS:", avgPrezzo.sum / avgPrezzo.count)
 
 // TopN
-const topN = cars.sort(function (a, b) { return a.prezzo - b.prezzo }).reverse().slice(0, 10)
-/* console.log("SELECT TOP 10(prezzo) FROM CARS:")
-console.table(topN) */
+const topN = cars.sort( (a, b) =>  a.prezzo - b.prezzo ).reverse().slice(0, 10)
+console.log("SELECT TOP 10(prezzo) FROM cars:")
+console.table(topN) 
 
 
 
@@ -177,12 +212,14 @@ console.log("LEFT OUTER JOIN")
 
 var left_join = prodotti.reduce((loj, pp) => {
 
-  let oc = categorie.filter(cc => pp.categoryId == cc.id);
-  oc.map(v => {     
-    let no={...pp, ...v}    
-    loj.push(no) }) 
+  let oc = categorie.filter(cc => pp.categoryId == cc.idCat);
+
+  let no
+  if (oc.length) no = { ...pp, ...oc[0] }; else no = pp;
+  loj.push(no)
   return loj;
-}, [])
+}
+  , [])
 
 //console.table(left_join)
 
@@ -202,12 +239,15 @@ console.log("RIGHT OUTER JOIN")
 
 
 const right_join = categorie.reduce((roj, cc) => {
-  let op = prodotti.filter(pp => pp.categoryId == cc.id);
-    
-    op.map(v => {     
-      let no={...cc, ...v}    
-      roj.push(no) }) 
-    return roj;
+  let op = prodotti.filter(pp => pp.categoryId == cc.idCat);
+
+  if (op.length == 0) roj.push(cc); else {
+    op.map(v => {
+      let no = { ...cc, ...v }
+      roj.push(no)
+    })
+  }
+  return roj;
 }, [])
 
 
@@ -239,16 +279,16 @@ WHERE prodotti.categoryId=categorie.id;
 
 //let np = prodotti_.reduce(function (acc, p) { let no = {}; Object.entries(p).forEach(([key, value]) => no[key + "__"] = value); return acc.concat(no) }, [])
 
-let prod_cart = [].concat(...prodotti.map(pp => categorie.map(cc => Object.assign({},{...pp, ...cc}))))
+let prod_cart = [].concat(...prodotti.map(pp => categorie.map(cc => Object.assign({}, { ...pp, ...cc }))))
 
-console.table(prod_cart.slice(0,10))
+//console.table(prod_cart.slice(0,10))
 console.log(prod_cart.length)
 
 
 let natjoin = prod_cart.filter(f => (f.categoryId == f.idCat))
 
 
-console.table(natjoin)
+//console.table(natjoin)
 
 console.log(natjoin.length)
 
