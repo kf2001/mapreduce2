@@ -1,4 +1,7 @@
-const fs=require ("fs")
+
+// JAVASCRIPT MAP REDUCE & SQL
+
+
 
 const cars = require("./cars")
 const prodotti = require("./prodotti")
@@ -6,14 +9,9 @@ const categorie = require("./categorie")
 const ordini = require("./ordini")
 const clienti = require("./clienti")
 
-cars.map(c => { c.prezzo = parseInt(c.prezzo)})
-categorie.map(c => { c.idCat = c.id; delete c.id; c.descrCat = c.description; delete c.description; c.tipo = c.name; delete c.name })
-prodotti.map(p => { p.idProd = p.id; delete p.id, delete p.discontinued; delete p.supplierId; delete p.quantityPerUnit; delete p.unitsOnOrder; delete p.reorderLevel })
 
 
-fs.writeFileSync("cars_.json", JSON.stringify(cars));
-fs.writeFileSync("prodotti_.json", JSON.stringify(prodotti));
-fs.writeFileSync("categorie_.json", JSON.stringify(categorie));
+//Le operazioni fondamentali su una tabella sono la proiezione e la selezione
 
 //Proiezione
 console.log("Proiezione")
@@ -31,7 +29,8 @@ console.log("Selezione")
 */
 console.log("SELECT* FROM cars WHERE dispo < 5")
 let selez = cars.filter(cc=>cc.dispo<5)
-//console.table(selez)
+
+console.table(selez)
 
 //SORTING
 console.log("Sorting")
@@ -105,8 +104,8 @@ const groupByModel = cars.reduce((gruppi, cc) => {
   return gruppi;
 }, {})
 
-/* console.log("SELECT COUNT(*) FROM CARS GROUP BY(casa)")
-console.table(groupByModel) */
+/* console.log("SELECT casa, COUNT(*) FROM CARS GROUP BY(casa)")*/
+console.table(groupByModel) 
 
 // SELECT COUNT(*) FROM CLIENTI GROUP BY(country)
 
@@ -118,14 +117,14 @@ const groupByClientiCountry = clienti.reduce((gruppi, cc) => {
 
 
 
-/* 
 console.table(groupByClientiCountry)
 
+/* 
 console.table("oppure")
 console.table(Object.entries(groupByClientiCountry)) */
 let oo = Object.entries(groupByClientiCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
-/* console.log("SELECT COUNT(*) FROM CLIENTI GROUP BY(country)")
-console.table(oo) */
+ console.log("SELECT COUNT(*) FROM CLIENTI GROUP BY(country)")
+console.table(oo)/* */
 
 // numero di ordini per cliente
 
