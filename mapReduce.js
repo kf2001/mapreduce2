@@ -214,11 +214,11 @@ console.log("LEFT OUTER JOIN")
 
 var left_join = prodotti.reduce((loj, pp) => {
 
-  let oc = categorie.filter(cc => pp.categoryId == cc.idCat);
+  let lookup_categoria = categorie.filter(cc => pp.categoryId == cc.idCat);
 
-  let no
-  if (oc.length) no = { ...pp, ...oc[0] }; else no = pp;
-  loj.push(no)
+  let union_rec
+  if (lookup_categoria) union_rec = { ...pp, ...lookup_categoria[0] }; else union_rec = pp;
+  loj.push(union_rec)
   return loj;
 }
   , [])
