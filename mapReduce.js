@@ -229,11 +229,11 @@ console.log(left_join.length)
 
 
 
-//Right Outer J
+//Left Outer J
 
 /*
 SELECT * 
-FROM categorie
+FROM prodotti
 LEFT JOIN prodotti
 ON categorie.id= prodotti.categoryId;
  */
@@ -241,12 +241,12 @@ console.log("RIGHT OUTER JOIN")
 
 
 const right_join = categorie.reduce((roj, cc) => {
-  let op = prodotti.filter(pp => pp.categoryId == cc.idCat);
+  let lookup_prodotti = prodotti.filter(pp => pp.categoryId == cc.idCat);
 
-  if (op.length == 0) roj.push(cc); else {
-    op.map(v => {
-      let no = { ...cc, ...v }
-      roj.push(no)
+  if (lookup_prodotti.length == 0) roj.push(cc); else {
+    lookup_prodotti.map(v => {
+      let union_rec = { ...cc, ...v }
+      roj.push(union_rec)
     })
   }
   return roj;
@@ -266,11 +266,18 @@ let b = [1, 2, 3]
 
 let f = [].concat(...a.map(p => b.map(b => p + b)))
 
+/* f = [
+  'a1', 'a2', 'a3',
+  'b1', 'b2', 'b3',
+  'c1', 'c2', 'c3',
+  'd1', 'd2', 'd3'
+] 
+*/
 console.log(f)
 //let f =  [].concat(...a.map(a => b.map(b => [a+b]))).reduce((acc, val) => acc.concat(val), []);
 
-console.log("NATURAL JOIN")
-// NATURAL JOIN
+console.log("INNER JOIN")
+// INNER JOIN
 /*
 SELECT * 
 FROM prodotti, categorie
