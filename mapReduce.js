@@ -1,16 +1,19 @@
+const fs=require ("fs")
 
-var cars = require("./cars1")
-var prodotti = require("./prodotti")
-var categorie = require("./categories")
-var ordini = require("./ordini")
-var clienti = require("./clienti")
+const cars = require("./cars")
+const prodotti = require("./prodotti")
+const categorie = require("./categorie")
+const ordini = require("./ordini")
+const clienti = require("./clienti")
 
 cars.map(c => { c.prezzo = parseInt(c.prezzo)})
 categorie.map(c => { c.idCat = c.id; delete c.id; c.descrCat = c.description; delete c.description; c.tipo = c.name; delete c.name })
 prodotti.map(p => { p.idProd = p.id; delete p.id, delete p.discontinued; delete p.supplierId; delete p.quantityPerUnit; delete p.unitsOnOrder; delete p.reorderLevel })
 
 
-
+fs.writeFileSync("cars_.json", JSON.stringify(cars));
+fs.writeFileSync("prodotti_.json", JSON.stringify(prodotti));
+fs.writeFileSync("categorie_.json", JSON.stringify(categorie));
 
 //Proiezione
 console.log("Proiezione")
