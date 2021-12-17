@@ -1,10 +1,12 @@
 
+<link href="file://./my.css" rel="stylesheet">
+
 # Map - Reduce & SQL in Javascript
 
 
  Il paradigma MapReduce è alla base di framework di calcolo parallelo come _Apache Hadoop_ per elaborare enormi quantità di dati.
 
- Si fonda su un tipo di programmazione funzionale, dove cioè si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e così via.
+ Si fonda su un tipo di **programmazione** funzionale, dove cioè si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e così via.
 
 In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se, all'inizio, un po' criptici.
 
@@ -240,7 +242,7 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 ### Binning
 
-#### Suddivide i record in base ad un criterio
+#### Tipico pattern in Hadoop: suddivide i record in base ad un criterio
 ##### Esempio: suddividere le auto in 5 categorie in base al prezzo
 
 * JS
@@ -347,11 +349,3 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 
  
-
-
-
-
-
-
-
-
