@@ -336,7 +336,7 @@ let prod=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val)
 let proiezione=prodotti.filter(pp=>prod.includes(pp.idProd)).map(p=>new Object({"id":p.idProd, "descr":p.name}))
 
 
-console.table(proiezione)
+//console.table(proiezione)
 
 
 // elenco dei prodotti che non sono mai stati scontati di almeno il 20%
@@ -354,7 +354,38 @@ let prodsco=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(v
 let proiezione_=prodotti.filter(pp=>prodsco.indexOf(pp.idProd)==-1).map(p=>new Object({"id":p.idProd, "descr":p.name}))
 
 
-console.table(proiezione_)
+//console.table(proiezione_)
+
+
+// ORDINI IN CUI tutti i prodotti sono di almeno 2 categorie  diverse
+/*
+SELECT idOrdine, SELECT count(*) DISTINCT categorie from prodotti,categorie) as div
+FROM dettagli 
+WHERE div >= 2
+GROUP BY idOrdine
+
+
+*/
+
+
+let rispc={}
+
+prodotti.forEach(pp=>rispc[pp.idProd]=pp.categoryId)
+
+
+const groupByCat = (dettagli.reduce((gruppi, cc) => {
+  var prod=[]
+  cc.prodotti.forEach(pp=>prod.push(rispc[pp.productId]))
+  let diversi=new Set(prod).size
+ 
+  if(diversi>1) gruppi.push(new Object({"ord":cc.orderId, "det":prod.length, "div":diversi}));
+  return gruppi;
+}, []))
+
+console.table(groupByCat)
+
+
+
 
 
 
