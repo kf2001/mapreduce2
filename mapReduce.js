@@ -7,6 +7,7 @@ const cars = require("./cars")
 const prodotti = require("./prodotti")
 const categorie = require("./categorie")
 const ordini = require("./ordini")
+const dettagli = require("./dettagli")
 const clienti = require("./clienti")
 
 
@@ -58,7 +59,8 @@ console.log("SELECT COUNT(*) FROM CARS", conta)
 
 //SELECT SUM(dispo) FROM CARS
 
-
+let totumo = cars.map(cc => cc.dispo)
+console.log(totumo)
 let totm = cars.map(cc => cc.dispo).reduce((sum, cc) => sum + cc, 0);
 //oppure
 let totm_alt = cars.reduce((sum, cc) => sum + cc.dispo, 0);
@@ -300,4 +302,62 @@ let natjoin = prod_cart.filter(f => (f.categoryId == f.idCat))
 //console.table(natjoin)
 
 console.log(natjoin.length)
+
+
+
+// SUBQUERY
+
+//IN
+
+//clienti che hanno fatto almeno un ordine
+
+/*
+SELECT *
+FROM clienti
+WHERE id IN (
+  SELECT customerId FROM ordini
+) 
+*/
+
+
+console.log("SUBQUERY IN")
+
+// elenco dei prodotti che sono stati ordinati almeno una volta in quantità superiore a 100 unità
+
+/*
+SELECT DISTINCT idProd as id, nome as descr
+FROM prodotti 
+WHERE productId IN (SELECT productId from DETTAGLI WHERE quantity>100)
+
+*/
+
+let prod=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val), []).filter(v=>v.quantity>100).map(pp=>pp.productId)
+
+let proiezione=prodotti.filter(pp=>prod.includes(pp.idProd)).map(p=>new Object({"id":p.idProd, "descr":p.name}))
+
+
+console.table(proiezione)
+
+
+// elenco dei prodotti che non sono mai stati scontati di almeno il 20%
+
+/*
+SELECT DISTINCT idProd as id, nome as descr
+FROM prodotti 
+WHERE productId NOT IN (SELECT productId from DETTAGLI WHERE discount>=.20)
+
+*/
+
+
+let prodsco=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val), []).filter(v=>v.discount>0.19).map(pp=>pp.productId*1).sort()
+
+let proiezione_=prodotti.filter(pp=>prodsco.indexOf(pp.idProd)==-1).map(p=>new Object({"id":p.idProd, "descr":p.name}))
+
+
+console.table(proiezione_)
+
+
+
+
+
 
