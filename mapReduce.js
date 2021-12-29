@@ -3,7 +3,7 @@
 
 
 
-const cars = require("./cars")
+
 const prodotti = require("./prodotti")
 const categorie = require("./categorie")
 const ordini = require("./ordini")
@@ -16,20 +16,20 @@ const clienti = require("./clienti")
 
 //Proiezione
 console.log("Proiezione")
-//SELECT casa, modello anno FROM CARS
+//SELECT id, companyName, country FROM clienti
 
-console.log("SELECT casa, modello anno FROM CARS")
-let proiez = cars.map(c=>new Object({"casa":c.casa,"modello": c.modello, "anno":c.anno })).slice(0,20);
-//console.table(proiez)
+console.log("SELECT id, companyName, country FROM clienti")
+let proiez = clienti.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country })).slice(0,20);
+console.table(proiez)
 
 //Selezione
 console.log("Selezione")
 /*SELECT *
- FROM cars
- WHERE dispo<5
+ FROM clienti
+ WHERE country = "UK"
 */
-console.log("SELECT* FROM cars WHERE dispo < 5")
-let selez = cars.filter(cc=>cc.dispo<5)
+console.log("SELECT * FROM clienti WHERE country = 'UK'")
+let selez = clienti.filter(cc=>cc.country=="UK")
 
 console.table(selez)
 
@@ -38,59 +38,65 @@ console.log("Sorting")
 
 /*
 SELECT * 
-FROM CARS 
-ORDERBY prezzo
+FROM clienti 
+ORDERBY companyName
 */
-let sorted = cars.sort((a,b)=> ( b.prezzo - a.prezzo)).slice(0,20);
-console.log("SELECT * FROM cars ORDERBY prezzo DESC")
-//console.table( sorted)
+
+let sorted = clienti.sort((a,b)=> ( b.companyName < a.companyName)).slice(0,20);
+console.log("SELECT * FROM clienti ORDERBY companyName")
+console.table( sorted)
+
+
 
 //------------------------------------
+
+// Funzioni di aggregazione
 // count
 
-//SELECT COUNT(*) FROM CARS
+//SELECT COUNT(*) FROM clienti
 
-let conta = cars.reduce((count, val) => count + 1, 0);
-console.log("SELECT COUNT(*) FROM CARS", conta)
+let numero_clienti = clienti.reduce((count, val) => count + 1, 0);
+console.log("SELECT COUNT(*) FROM clienti", numero_clienti)
 
 //---------------------------------
 
-// Totale macchine disponibili
+// Totale prodotti un magazino
 
-//SELECT SUM(dispo) FROM CARS
+//SELECT SUM(c) FROM prodotti
 
-let totumo = cars.map(cc => cc.dispo)
-console.log(totumo)
-let totm = cars.map(cc => cc.dispo).reduce((sum, cc) => sum + cc, 0);
+
+let totp = prodotti.map(prod => prod.unitsInStock).reduce((sum, cc) => sum + cc, 0);
 //oppure
-let totm_alt = cars.reduce((sum, cc) => sum + cc.dispo, 0);
+let totp_alt = prodotti.reduce((sum, prod) => sum + prod.unitsInStock, 0);
 
-console.log("SELECT SUM(dispo) FROM cars", totm)
-console.log("SELECT SUM(dispo) FROM cars", totm_alt)
+console.log("SELECT SUM(unitsInStock) FROM prodotti", totp)
+console.log("SELECT SUM(unitsInStock) FROM prodotti", totp_alt)
 
 
 // --------------------------------------------------
 
 //max-min
 
-//SELECT MAX(prezzo) FROM CARS
 
-const maxPrezzo = cars.map(cc => cc.prezzo).reduce((max, d) => d > max ? d : max);
-console.log("SELECT MAX(prezzo) FROM CARS", maxPrezzo)
+//SELECT MAX(unitPrice) FROM prodotti
 
-//SELECT MIN(prezzo) FROM CARS
+const maxPrezzo = prodotti.map(cc => cc.unitPrice).reduce((max, d) => d > max ? d : max);
+console.log("SELECT MAX(unitPrice) FROM prodotti", maxPrezzo)
 
-const minPrezzo = cars.map(cc => cc.prezzo).reduce((min, d) => d < min ? d : min);
-console.log("SELECT MIN(prezzo) FROM CARS", minPrezzo)
+//SELECT MIN(unitPrice) FROM prodotti
+
+const minPrezzo = prodotti.map(cc => cc.unitPrice).reduce((min, d) => d < min ? d : min);
+console.log("SELECT MIN(unitPrice) FROM prodotti", minPrezzo)
+
 
 // Average
-//SELECT AVG(prezzo) FROM CARS
-const avgPrezzo = cars.map(cc => cc.prezzo).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
-console.log("SELECT AVG(prezzo) FROM CARS:", avgPrezzo.sum / avgPrezzo.count)
+//SELECT AVG(unitPrice) FROM prodotti
+const avgPrezzo = prodotti.map(cc => cc.unitPrice).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
+console.log("SELECT AVG(unitPrice) FROM prodotti:", avgPrezzo.sum / avgPrezzo.count)
 
 // TopN
-const topN = cars.sort( (a, b) =>  a.prezzo - b.prezzo ).reverse().slice(0, 10)
-console.log("SELECT TOP 10(prezzo) FROM cars:")
+const topN = prodotti.sort( (a, b) =>  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
+console.log("SELECT TOP 10(unitPrice) FROM prodotti:")
 console.table(topN) 
 
 
@@ -99,17 +105,16 @@ console.table(topN)
 
 //GroupBy
 
-//SELECT COUNT(*) FROM CARS GROUP BY(casa)
+//SELECT categoryId, COUNT(*) FROM prodotti GROUP BY(categoryId)
 
-const groupByModel = cars.reduce((gruppi, cc) => {
-  gruppi[cc.casa] = (gruppi[cc.casa] || 0) + 1;
+const groupByCategory = prodotti.reduce((gruppi, cc) => {
+  gruppi[cc.categoryId] = (gruppi[cc.categoryId] || 0) + 1;
   return gruppi;
 }, {})
 
-/* console.log("SELECT casa, COUNT(*) FROM CARS GROUP BY(casa)")*/
-console.table(groupByModel) 
+console.table(groupByCategory)
 
-// SELECT COUNT(*) FROM CLIENTI GROUP BY(country)
+// SELECT country, COUNT(*) FROM clienti GROUP BY(country)
 
 const groupByClientiCountry = clienti.reduce((gruppi, cc) => {
 
@@ -125,12 +130,12 @@ console.table(groupByClientiCountry)
 console.table("oppure")
 console.table(Object.entries(groupByClientiCountry)) */
 let oo = Object.entries(groupByClientiCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
- console.log("SELECT COUNT(*) FROM CLIENTI GROUP BY(country)")
+ console.log("SELECT country, COUNT(*) FROM clienti GROUP BY(country) SORT BY country")
 console.table(oo)/* */
 
 // numero di ordini per cliente
 
-//SELECT count(*), customerId FROM ORDINI GROUP BY customerId HAVING count(*)>=5 ORDER BY count(*) DESC
+//SELECT customerId, count(*) FROM ordini GROUP BY customerId HAVING count(*)>=5 ORDER BY count(*) DESC
 
 
 const OrdinigroupByCliente = Object.entries(ordini.reduce((gruppi, cc) => {
@@ -140,21 +145,21 @@ const OrdinigroupByCliente = Object.entries(ordini.reduce((gruppi, cc) => {
 }, {})).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n).filter(o => o.n >= 5)
 
 
-console.log("SELECT count(*), customerId FROM ORDINI GROUP BY customerId HAVING count(*)>=5 ORDER BY count(*) DESC")
-//console.table(OrdinigroupByCliente)
+console.log("SELECT customerId, count(*) FROM ordini GROUP BY customerId HAVING count(*)>=5 ORDER BY count(*) DESC")
+console.table(OrdinigroupByCliente)
 
 // Distinct
 
 
-// SELECT DISTINCT casa FROM CARS ORDER BY casa
-const distinct = Array.from(new Set(cars.map(cc => cc.casa))).sort()
-console.log("DISTINCT casa FROM CARS ORDER BY casa")
-//console.log(distinct)
+// SELECT DISTINCT country FROM clienti ORDER BY country
+const distinct = Array.from(new Set(clienti.map(cc => cc.country))).sort()
+console.log("SELECT DISTINCT country FROM clienti ORDER BY country")
+console.log(distinct)
 
 // Binning
 
 // Suddivide i record in base ad un criterio
-
+/*
 const categ = cars.reduce((cate, cc) => {
 
   let pr = parseInt(cc.prezzo)
@@ -165,39 +170,64 @@ const categ = cars.reduce((cate, cc) => {
   else cate["extralusso"].push(cc)
   return cate;
 }, { piccole: [], medie: [], grandi: [], lusso: [], extralusso: [] })
+*/
 
-/* console.log("piccole")
-console.table(categ.piccole)
 
-console.log("medie")
-console.table(categ.medie)
 
-console.log("grandi")
-console.table(categ.grandi)
+const categ = prodotti.reduce((cate, cc) => {
+
+  let pr = parseInt(cc.unitPrice)
+  if (pr < 4) cate["molto_economici"].push(cc)
+  else if (pr < 10) cate["economici"].push(cc)
+  else if (pr < 50) cate["costosi"].push(cc)
+ 
+  else cate["lusso"].push(cc)
+  return cate;
+}, { molto_economici: [], economici: [], costosi: [], lusso: [] })
+
+/*  */console.log("molto_economici")
+console.table(categ.molto_economici)
+
+console.log("economici")
+console.table(categ.economici)
+
+console.log("costosi")
+console.table(categ.costosi)
 
 console.log("lusso")
 console.table(categ.lusso)
 
-console.log("extralusso")
-console.table(categ.extralusso) */
+
 
 
 // Inverted Index
 
-// PER OGNI ANNO FORNIRE L'ELENCO DELLE CASE PRESENTI CON ALMENO UNA VETTURA
-const invIndex = cars.reduce((anni, cc) => {
-  anni[cc.anno] = (anni[cc.anno] || new Set()).add(cc.casa);
+
+// PER OGNI MESE FORNIRE L'ELENCO DEI CLIENTI PRESENTI CON ALMENO UN ORDINE
+const invIndex = ordini.reduce((anni, ord) => {
+
+  let anno=new Date(ord.orderDate).getFullYear()
+  let mese=new Date(ord.orderDate).getMonth()
+  let key=mese+"-"+anno
+  anni[key] = (anni[key] || new Set()).add(ord.customerId);
   return anni;
 }, {})
-//console.log(invIndex)
-// PER OGNI CASA FORNIRE L'ELENCO DEGLI ANNI RELATIVI ALLE VETTURE
-const invIndex2 = cars.map(cc => new Object({ casa: cc.casa, anno: cc.anno })).reduce((casa, cc) => {
-  casa[cc.casa] = (casa[cc.casa] || new Set()).add(cc.anno);
-  return casa;
+
+// PER OGNI ANNO FORNIRE L'ELENCO DELLE CASE PRESENTI CON ALMENO UNA VETTURA
+/* const invIndex = cars.reduce((anni, cc) => {
+  anni[cc.anno] = (anni[cc.anno] || new Set()).add(cc.casa);
+  return anni;
+}, {}) */
+console.log(invIndex)
+
+// PER OGNI CLIENTE FORNIRE LE DATE DEGLI ORDINI
+const invIndex2 = ordini.reduce((date_ordini, cc) => {
+  date_ordini[cc.customerId] = (date_ordini[cc.customerId] || new Set()).add(cc.orderDate.substr(0,10));
+  return date_ordini;
 }, {})
 
 
-//console.log(invIndex2)
+console.log(invIndex2)
 
 
 ////Joins
@@ -382,7 +412,7 @@ const groupByCat = (dettagli.reduce((gruppi, cc) => {
   return gruppi;
 }, []))
 
-console.table(groupByCat)
+//console.table(groupByCat)
 
 
 
