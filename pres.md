@@ -1,5 +1,7 @@
 
-<link href="file://./my.css" rel="stylesheet">
+<link href="./my.css" rel="stylesheet">
+
+
 
 # Map - Reduce & SQL in Javascript
 
@@ -35,7 +37,7 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
    
 * Javascript
   
-        let proiez = clienti.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country })).slice(0,20);
+        let proiez = clienti.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country }));
 
 
 #### SELEZIONE
@@ -404,7 +406,7 @@ c
         FROM dettagli 
         WHERE diverse >= 2
         GROUP BY idOrdine
-) 
+
 
 * JS
 
