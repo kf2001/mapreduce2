@@ -30,13 +30,13 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
  * SQL 
 
-        SELECT casa, modello, anno 
-        FROM CARS
+        SELECT id, companyName, country 
+        FROM clienti
 
    
 * Javascript
   
-        let proiez = cars.map(c=>new Object({"casa":c.casa,"modello": c.modello, "anno":c.anno }));
+        let proiez = clienti.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country })).slice(0,20);
 
 
 #### SELEZIONE
@@ -48,13 +48,13 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
  * SQL 
 
         SELECT *
-        FROM cars
-        WHERE dispo < 5
+        FROM clienti
+        WHERE country = "UK"
 
    
 * Javascript
   
-       let selez = cars.filter(cc=>cc.dispo < 5)
+       let selez = clienti.filter(cc=>cc.country=="UK")
 
 #### PRODOTTO CARTESIANO
 
@@ -81,14 +81,14 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
  * SQL 
 
-        SELECT DISTINCT casa 
-        FROM CARS 
-        ORDER BY casa
+        SELECT DISTINCT country 
+        FROM clienti 
+        ORDER BY country
 
    
 * Javascript
   
-       const distinct = Array.from(new Set(cars.map(cc => cc.casa))).sort()
+       const distinct = Array.from(new Set(clienti.map(cc => cc.country))).sort()
 
 
 
@@ -100,41 +100,45 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 * SQL 
   
         SELECT * 
-        FROM CARS 
-        ORDER BY prezzo
+        FROM clienti 
+        ORDER BY companyName
 * JS
   
-        let sorted = cars.sort((a,b)=> ( b.prezzo - a.prezzo ));
+        let sorted = clienti.sort((a,b)=> ( b.companyName < a.companyName));
+
     
 
 ### FUNZIONI DI AGGREGAZIONE
 
 #### COUNT
-##### Numero totale di autovetture
+##### Numero totale di clienti
 
 * SQL 
   
         SELECT COUNT(*) 
-        FROM CARS
+        FROM clienti
 * JS
   
-        let totcars = cars.map(cc => cc.dispo).reduce((sum, cc) => sum + cc, 0);
-    oppure
-
-        let totcars = cars.reduce((sum, cc) => sum + cc.dispo, 0);
+        let numero_clienti = clienti.reduce((count, val) => count + 1, 0);
+    
 
 #### SUM
 
 
-###### _Totale macchine disponibili_
+###### _Totale prodotti in magazzino_
 
 * SQL 
   
-        SELECT SUM(dispo) 
-        FROM CARS
+        SELECT SUM(unitsInStock) 
+        FROM prodotti
 * JS
   
-        let totdispo = cars.reduce((sum, cc) => sum + cc.dispo, 0);
+       let totp = prodotti.map(prod => prod.unitsInStock).reduce((sum, cc) => sum + cc, 0);
+        
+        //oppure
+        
+        let totp_alt = prodotti.reduce((sum, prod) => sum + prod.unitsInStock, 0);
+
 
 #### MAX
 
@@ -142,11 +146,12 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 * SQL 
   
-        SELECT MAX(prezzo)
-        FROM CARS
+        SELECT MAX(unitPrice)
+        FROM prodotti
 * JS
   
-        const maxPrezzo = cars.map(cc => cc.prezzo).reduce((max, d) => d > max ? d : max);
+        const maxPrezzo = prodotti.map(cc => cc.unitPrice).reduce((max, d) => d > max ? d : max);
+
 
 #### MIN
 
@@ -154,11 +159,12 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 * SQL 
   
-        SELECT MIN(prezzo)
-        FROM CARS
+        SELECT MIN(unitPrice)
+        FROM prodotti
 * JS
   
-        const minPrezzo = cars.map(cc => cc.prezzo).reduce((min, d) => d < min ? d : min);
+        const minPrezzo = prodotti.map(cc => cc.unitPrice).reduce((min, d) => d < min ? d : min);
+
 
 #### AVG
 
@@ -166,40 +172,44 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 * SQL 
   
-        SELECT AVG(prezzo)
-        FROM CARS
+        SELECT AVG(unitPrice)
+        FROM prodotti
 * JS
   
-        const avgPrezzo = cars.map(cc => cc.prezzo).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
-
+        const avgPrezzo = prodotti.map(cc => cc.unitPrice).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
+c
 
 #### TOP N
 
-###### _Le dieci macchine più costose_
+###### _I dieci prodotti più costosi_
 
 * SQL 
   
-        SELECT TOP 10(prezzo)
-        FROM cars
+        SELECT TOP 10(unitPrice) 
+        FROM prodotti
 
 * JS
   
-        const topN = cars.sort((a, b) =>  a.prezzo - b.prezzo).reverse().slice(0, 10)
+        const topN = prodotti.sort( (a, b) =>  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
+
 
 
 ### GROUP BY
 
-###### _Numero di vetture per ogni casa automobilistica_
+###### _Numero di prodotti per ogni categoria_
 
 * SQL 
   
-        SELECT casa, COUNT(*)
-        FROM CARS
-        GROUP BY(casa)
+        SELECT categoryId, COUNT(*) 
+        FROM prodotti
+        GROUP BY(categoryId)
 
 * JS
   
-        const groupByCasa = cars.reduce((gruppi, cc) => { gruppi[cc.casa] = (gruppi[cc.casa] || 0) + 1;  return gruppi;}, {})
+        const groupByCategory = prodotti.reduce((gruppi, cc) => {
+  gruppi[cc.categoryId] = (gruppi[cc.categoryId] || 0) + 1;
+  return gruppi;
+}, {})
 
 ###### _Numero di clienti per Paese_
 
@@ -223,7 +233,7 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 * SQL 
   
         SELECT customerId, count(*)
-        FROM ORDINI
+        FROM ordini
         GROUP BY customerId 
         HAVING count(*) >= 5
         ORDER BY count(*) DESC
@@ -243,33 +253,38 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 ### Binning
 
 #### Tipico pattern in Hadoop: suddivide i record in base ad un criterio
-##### Esempio: suddividere le auto in 5 categorie in base al prezzo
+##### Esempio: suddividere i prodotti in 4 categorie in base al prezzo
 
 * JS
   
-        const categ = cars.reduce((cate, cc) => {
-        let pr = parseInt(cc.prezzo)
-        if (pr < 20000) cate["piccole"].push(cc)
-        else if (pr < 30000) cate["medie"].push(cc)
-        else if (pr < 50000) cate["grandi"].push(cc)
-        else if (pr < 70000) cate["lusso"].push(cc)
-        else cate["extralusso"].push(cc)
-        return cate;
-        }, { piccole: [], medie: [], grandi: [], lusso: [], extralusso: [] })
+        const categ = prodotti.reduce((cate, cc) => {
+
+  let pr = parseInt(cc.unitPrice)
+  if (pr < 4) cate["molto_economici"].push(cc)
+  else if (pr < 10) cate["economici"].push(cc)
+  else if (pr < 50) cate["costosi"].push(cc)
+ 
+  else cate["lusso"].push(cc)
+  return cate;
+}, { molto_economici: [], economici: [], costosi: [], lusso: [] })
 
 ### Indice invertito
 
 #### Si usa per creare strutture tipo dizionario
-##### Esempio: per ogni anno fornire l'elenco delle case presenti con almeno una vettura
+##### Esempio: per ogni mese fornire l'elenco dei clientu che hanno fatto almeno un ordine
 
 * JS
 
-        const invIndex = cars.reduce((anni, cc) => {
-        anni[cc.anno] = (anni[cc.anno] || new Set()).add(cc.casa);
-        return anni;
+        const invIndex = ordini.reduce((mesi, ord) => {
+
+        let anno=new Date(ord.orderDate).getFullYear()
+        let mese=new Date(ord.orderDate).getMonth()
+        let key=mese+"-"+anno
+        mesi[key] = (mesi[key] || new Set()).add(ord.customerId);
+        return mesi;
         }, {})
 
-##### Esempio: per ogni casa fornire l'elenco degli anni relativi alle vetture
+##### Esempio: per ogni cliente fornire le date degli ordini
 
 * JS
   
@@ -332,7 +347,8 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 
 #### INNER JOIN (NATURAL JOIN)
-##### 
+##### _Inner Join e Natural Join sono molto simili: cambia solo il numero di colonne restituite_
+##### _Con questa soluzione facciamo prima il prodotto cartesiano tra le due tabelle e poi filtriamo solo i record coi i valori della colonna "cerniera" uguali_
 
 * SQL
   
@@ -348,4 +364,61 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 
 
+ ### SUBQUERY
+
+ ##### Esempio: elenco dei clienti che hanno fatto almeno un ordine 
+
+ * SQL
+  
+        SELECT *
+        FROM clienti
+        WHERE id IN ( SELECT customerId FROM ordini)
+) 
+
+* JS
+
+        const elenco_clienti=clienti.filter(cl=>ordini.filter(oo=>oo.customerId=cl.idCli))
+
+ ##### Esempio: elenco dei prodotti che sono stati ordinati almeno una volta in quantità superiore a 100 unità 
+
+ * SQL
+  
+        SELECT DISTINCT idProd as id, nome as descr
+        FROM prodotti 
+        WHERE productId IN (SELECT productId from DETTAGLI WHERE quantity>100)
+) 
+
+* JS
+
+        let prod=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val), []).filter(v=>v.quantity>100).map(pp=>pp.productId)
+
+        poi
+
+        let proiezione=prodotti.filter(pp=>prod.includes(pp.idProd)).map(p=>new Object({"id":p.idProd, "descr":p.name}))
+
+
+ ##### Esempio: elenco degli ordini che comprendono prodotti di almeno due categorie diverse 
+
+ * SQL
+  
+        SELECT idOrdine, SELECT count(*) DISTINCT categorie from prodotti,categorie) as diverse
+        FROM dettagli 
+        WHERE diverse >= 2
+        GROUP BY idOrdine
+) 
+
+* JS
+
+        const groupByCat = (dettagli.reduce((gruppi, cc) => {
+        var prod=[]
+        cc.prodotti.forEach(pp=>prod.push(rispc[pp.productId]))
+        let diversi=new Set(prod).size
  
+        if(diversi>1) gruppi.push(new Object({"ord":cc.orderId, "det":prod.length, "div":diversi}));
+        return gruppi;
+        }, []))
+
+
+
+
+

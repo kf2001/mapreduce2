@@ -60,9 +60,9 @@ console.log("SELECT COUNT(*) FROM clienti", numero_clienti)
 
 //---------------------------------
 
-// Totale prodotti un magazino
+// Totale prodotti in magazino
 
-//SELECT SUM(c) FROM prodotti
+//SELECT SUM(unitsInStock) FROM prodotti
 
 
 let totp = prodotti.map(prod => prod.unitsInStock).reduce((sum, cc) => sum + cc, 0);
@@ -159,19 +159,6 @@ console.log(distinct)
 // Binning
 
 // Suddivide i record in base ad un criterio
-/*
-const categ = cars.reduce((cate, cc) => {
-
-  let pr = parseInt(cc.prezzo)
-  if (pr < 20000) cate["piccole"].push(cc)
-  else if (pr < 30000) cate["medie"].push(cc)
-  else if (pr < 50000) cate["grandi"].push(cc)
-  else if (pr < 70000) cate["lusso"].push(cc)
-  else cate["extralusso"].push(cc)
-  return cate;
-}, { piccole: [], medie: [], grandi: [], lusso: [], extralusso: [] })
-*/
-
 
 
 const categ = prodotti.reduce((cate, cc) => {
@@ -185,7 +172,7 @@ const categ = prodotti.reduce((cate, cc) => {
   return cate;
 }, { molto_economici: [], economici: [], costosi: [], lusso: [] })
 
-/*  */console.log("molto_economici")
+/*  console.log("molto_economici")
 console.table(categ.molto_economici)
 
 console.log("economici")
@@ -196,7 +183,7 @@ console.table(categ.costosi)
 
 console.log("lusso")
 console.table(categ.lusso)
-
+*/
 
 
 
@@ -204,20 +191,15 @@ console.table(categ.lusso)
 
 
 // PER OGNI MESE FORNIRE L'ELENCO DEI CLIENTI PRESENTI CON ALMENO UN ORDINE
-const invIndex = ordini.reduce((anni, ord) => {
+const invIndex = ordini.reduce((mesi, ord) => {
 
   let anno=new Date(ord.orderDate).getFullYear()
   let mese=new Date(ord.orderDate).getMonth()
   let key=mese+"-"+anno
-  anni[key] = (anni[key] || new Set()).add(ord.customerId);
-  return anni;
+  mesi[key] = (mesi[key] || new Set()).add(ord.customerId);
+  return mesi;
 }, {})
 
-// PER OGNI ANNO FORNIRE L'ELENCO DELLE CASE PRESENTI CON ALMENO UNA VETTURA
-/* const invIndex = cars.reduce((anni, cc) => {
-  anni[cc.anno] = (anni[cc.anno] || new Set()).add(cc.casa);
-  return anni;
-}, {}) */
 console.log(invIndex)
 
 // PER OGNI CLIENTE FORNIRE LE DATE DEGLI ORDINI
@@ -348,7 +330,8 @@ WHERE id IN (
   SELECT customerId FROM ordini
 ) 
 */
-
+const cli1=clienti.filter(cl=>ordini.filter(oo=>oo.customerId=cl.idCli))
+console.table(cli1)
 
 console.log("SUBQUERY IN")
 
