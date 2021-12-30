@@ -8,7 +8,7 @@
 
  Si fonda su un tipo di **programmazione** funzionale, dove cioè si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e così via.
 
-In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se, all'inizio, un po' criptici.
+In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se un po' criptici.
 
 In Javascript possiamo combinare la potente programmazione funzionale con la semplicità nella gestione degli array in modo molto utile e divertente.
 
@@ -19,14 +19,13 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
 
 
-
 ### OPERAZIONI FONDAMENTALI SULLE TABELLE
 
 ##### PROIEZIONE
 
 ##### La _proiezione_ è un filtraggio sulle colonne
 
-###### Ad esempio della tabella **CARS** vogliamo visualizzare solo alcuni campi
+###### Ad esempio della tabella **CLIENTI** vogliamo visualizzare solo alcuni campi
 
  * SQL 
 
@@ -43,7 +42,7 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 
  ##### la _selezione_ è un filtraggio sulle righe
 
-###### Della tabella **CARS** vogliamo solo i modelli con meno di 5 unità disponibili
+###### Della tabella **CLIENTI** vogliamo solo quelli provenienti dal Regno Unito
 
  * SQL 
 
@@ -74,10 +73,10 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
             'd1', 'd2', 'd3'
         */  ] 
 
-### DISTINCT
+### CLAUSOLA DISTINCT
 
-##### Eliminare i record uguali
-###### Elenco delle case automobilistiche
+##### Elimina i record uguali: in Javascript possiamo usare l'oggetto Set()
+###### Elenco dei Paesi rappresentati
 
  * SQL 
 
@@ -228,7 +227,7 @@ c
         let filtra = Object.entries(groupByClientiCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
 
 
-#### _Numero di ordini per cliente (almeno 5)_
+##### _Numero di ordini per cliente (almeno 5)_
 
 * SQL 
   
@@ -258,25 +257,22 @@ c
 * JS
   
         const categ = prodotti.reduce((cate, cc) => {
-
-  let pr = parseInt(cc.unitPrice)
-  if (pr < 4) cate["molto_economici"].push(cc)
-  else if (pr < 10) cate["economici"].push(cc)
-  else if (pr < 50) cate["costosi"].push(cc)
- 
-  else cate["lusso"].push(cc)
-  return cate;
-}, { molto_economici: [], economici: [], costosi: [], lusso: [] })
+        let pr = parseInt(cc.unitPrice)
+        if (pr < 4) cate["molto_economici"].push(cc)
+        else if (pr < 10) cate["economici"].push(cc)
+        else if (pr < 50) cate["costosi"].push(cc)
+        else cate["lusso"].push(cc)
+        return cate;
+        }, { molto_economici: [], economici: [], costosi: [], lusso: [] })
 
 ### Indice invertito
 
 #### Si usa per creare strutture tipo dizionario
-##### Esempio: per ogni mese fornire l'elenco dei clientu che hanno fatto almeno un ordine
+##### Esempio: per ogni mese fornire l'elenco dei clienti che hanno effettuato almeno un ordine
 
 * JS
 
         const invIndex = ordini.reduce((mesi, ord) => {
-
         let anno=new Date(ord.orderDate).getFullYear()
         let mese=new Date(ord.orderDate).getMonth()
         let key=mese+"-"+anno
@@ -288,10 +284,10 @@ c
 
 * JS
   
-        const invIndex2 = cars.map(cc => new Object({ casa: cc.casa, anno: cc.anno })).reduce((casa, cc) => {
-        casa[cc.casa] = (casa[cc.casa] || new Set()).add(cc.anno);
-        return casa;
-        }, {})     
+        const invIndex2 = ordini.reduce((date_ordini, cc) => {
+        date_ordini[cc.customerId] = (date_ordini[cc.customerId] || new Set()).add(cc.orderDate.substr(0,10));
+        return date_ordini;
+        }, {})    
 
 
 
@@ -301,6 +297,8 @@ c
 #### Combinare due o più tabelle che si relazionano attraverso una o più colonne
 
 #### LEFT OUTER JOIN
+
+##### _filtra tutti i valori della prima tabella anche se non hanno corrispondenza nella seconda tabella_
 
 * SQL
   
@@ -323,6 +321,7 @@ c
 
 
 #### RIGHT OUTER JOIN
+##### _conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima_
 ##### la Right Outer Join è equivalente alla Left Outer Join scambiando le tabelle
 
 * SQL
@@ -348,7 +347,7 @@ c
 
 #### INNER JOIN (NATURAL JOIN)
 ##### _Inner Join e Natural Join sono molto simili: cambia solo il numero di colonne restituite_
-##### _Con questa soluzione facciamo prima il prodotto cartesiano tra le due tabelle e poi filtriamo solo i record coi i valori della colonna "cerniera" uguali_
+##### _Con questa soluzione facciamo prima il prodotto cartesiano tra le due tabelle e poi filtriamo solo i record con i valori della colonna "cerniera" uguali_
 
 * SQL
   
@@ -385,7 +384,7 @@ c
   
         SELECT DISTINCT idProd as id, nome as descr
         FROM prodotti 
-        WHERE productId IN (SELECT productId from DETTAGLI WHERE quantity>100)
+        WHERE productId IN (SELECT productId from dettagli WHERE quantity>100)
 ) 
 
 * JS
