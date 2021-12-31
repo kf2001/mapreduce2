@@ -9,11 +9,10 @@ In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche s
 
 In Javascript possiamo combinare la potente programmazione funzionale con la semplicità nella gestione degli array in modo molto utile e divertente.
 
-Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l'aiuto di [_mockaroo_](https://mockaroo.com)
-
+Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l'aiuto di [_mockaroo_](https://mockaroo.com).
 Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [questo](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [questo](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) o [questo](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), la spiegazione dell'uso di map(), reduce(), filter(), sort(), Set(), l'operatore Spread [...].
 
-
+Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git)
 
 
 ### OPERAZIONI FONDAMENTALI SULLE TABELLE
@@ -382,15 +381,8 @@ c
         SELECT DISTINCT idProd as id, nome as descr
         FROM prodotti 
         WHERE productId IN (SELECT productId from dettagli WHERE quantity>100)
-) 
 
-* JS
-
-        let prod=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val), []).filter(v=>v.quantity>100).map(pp=>pp.productId)
-
-        poi
-
-        let proiezione=prodotti.filter(pp=>prod.includes(pp.idProd)).map(p=>new Object({"id":p.idProd, "descr":p.name}))
+-%--
 
 
  ##### Esempio: elenco degli ordini che comprendono prodotti di almeno due categorie diverse 
@@ -413,6 +405,8 @@ c
         if(diversi>1) gruppi.push(new Object({"ord":cc.orderId, "det":prod.length, "div":diversi}));
         return gruppi;
         }, []))
+
+
 
 
 
