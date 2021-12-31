@@ -2,12 +2,7 @@
       <title>pres</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <link rel="stylesheet" href="file:///c:\Users\ennio\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
-      
-      
-      
-      
+            
       
       <style>
       /**
@@ -257,15 +252,14 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <link href="./my.css" rel="stylesheet">
-<h1 class="mume-header" id="map-reduce-sql-in-javascript">Map - Reduce &amp; SQL in Javascript</h1>
+      <h1 class="mume-header" id="map-reduce-sql-in-javascript">Map - Reduce &amp; SQL in Javascript</h1>
 
 <p>Il paradigma MapReduce &#xE8; alla base di framework di calcolo parallelo come <em>Apache Hadoop</em> per elaborare enormi quantit&#xE0; di dati.</p>
-<p>Si fonda su un tipo di <strong>programmazione</strong> funzionale, dove cio&#xE8; si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e cos&#xEC; via.</p>
+<p>Si fonda su un tipo di <em>programmazione funzionale</em>, dove cio&#xE8; si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e cos&#xEC; via.</p>
 <p>In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se un po&apos; criptici.</p>
 <p>In Javascript possiamo combinare la potente programmazione funzionale con la semplicit&#xE0; nella gestione degli array in modo molto utile e divertente.</p>
 <p>Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l&apos;aiuto di <a href="https://mockaroo.com"><em>mockaroo</em></a></p>
-<p>Rimando ad altri ottimi articoli, come <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">questo</a>, <a href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples">questo</a>, <a href="https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript">questo</a> o <a href="https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html">questo</a>, l&apos;uso di map(), reduce(), filter(), sort(), Set(), operatore Spread [...].</p>
+<p>Rimando ad altri ottimi articoli, come <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">questo</a>, <a href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples">questo</a>, <a href="https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript">questo</a> o <a href="https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html">questo</a>, la spiegazione dell&apos;uso di map(), reduce(), filter(), sort(), Set(), l&apos;operatore Spread [...].</p>
 <h3 class="mume-header" id="operazioni-fondamentali-sulle-tabelle">OPERAZIONI FONDAMENTALI SULLE TABELLE</h3>
 
 <h5 class="mume-header" id="proiezione">PROIEZIONE</h5>
@@ -369,7 +363,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <h4 class="mume-header" id="count">COUNT</h4>
 
-<h5 class="mume-header" id="numero-totale-di-clienti">Numero totale di clienti</h5>
+<h5 class="mume-header" id="_numero-totale-di-clienti_"><em>Numero totale di clienti</em></h5>
 
 <ul>
 <li>
@@ -514,7 +508,7 @@ return gruppi;<br>
 </pre>
 </li>
 </ul>
-<h5 class="mume-header" id="_numero-di-ordini-per-cliente-almeno-5_"><em>Numero di ordini per cliente (almeno 5)</em></h5>
+<h6 class="mume-header" id="_numero-di-ordini-per-cliente-almeno-5_"><em>Numero di ordini per cliente (almeno 5)</em></h6>
 
 <ul>
 <li>
@@ -623,7 +617,7 @@ return gruppi;<br>
 
 <h5 class="mume-header" id="_conserva-tutti-i-valori-della-seconda-tabella-anche-se-non-hanno-corrispondenza-nella-prima_"><em>conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima</em></h5>
 
-<h5 class="mume-header" id="la-right-outer-join-%C3%A8-equivalente-alla-left-outer-join-scambiando-le-tabelle">la Right Outer Join &#xE8; equivalente alla Left Outer Join scambiando le tabelle</h5>
+<h5 class="mume-header" id="_la-right-outer-join-%C3%A8-equivalente-alla-left-outer-join-scambiando-le-tabelle_"><em>la Right Outer Join &#xE8; equivalente alla Left Outer Join scambiando le tabelle</em></h5>
 
 <ul>
 <li>
@@ -722,9 +716,6 @@ return gruppi;<br>
  GROUP BY idOrdine
 </pre>
 </li>
-</ul>
-<p>)</p>
-<ul>
 <li>
 <p>JS</p>
 <pre class="language-text">  const groupByCat = (dettagli.reduce((gruppi, cc) =&gt; {

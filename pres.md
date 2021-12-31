@@ -1,14 +1,9 @@
-
-<link href="./my.css" rel="stylesheet">
-
-
-
 # Map - Reduce & SQL in Javascript
 
 
  Il paradigma MapReduce è alla base di framework di calcolo parallelo come _Apache Hadoop_ per elaborare enormi quantità di dati.
 
- Si fonda su un tipo di **programmazione** funzionale, dove cioè si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e così via.
+ Si fonda su un tipo di _programmazione funzionale_, dove cioè si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e così via.
 
 In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se un po' criptici.
 
@@ -16,7 +11,7 @@ In Javascript possiamo combinare la potente programmazione funzionale con la sem
 
 Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l'aiuto di [_mockaroo_](https://mockaroo.com)
 
-Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [questo](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [questo](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) o [questo](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), l'uso di map(), reduce(), filter(), sort(), Set(), operatore Spread [...].
+Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [questo](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [questo](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) o [questo](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), la spiegazione dell'uso di map(), reduce(), filter(), sort(), Set(), l'operatore Spread [...].
 
 
 
@@ -112,7 +107,7 @@ Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/new
 ### FUNZIONI DI AGGREGAZIONE
 
 #### COUNT
-##### Numero totale di clienti
+##### _Numero totale di clienti_
 
 * SQL 
   
@@ -229,7 +224,7 @@ c
         let filtra = Object.entries(groupByClientiCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
 
 
-##### _Numero di ordini per cliente (almeno 5)_
+###### _Numero di ordini per cliente (almeno 5)_
 
 * SQL 
   
@@ -324,7 +319,7 @@ c
 
 #### RIGHT OUTER JOIN
 ##### _conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima_
-##### la Right Outer Join è equivalente alla Left Outer Join scambiando le tabelle
+##### _la Right Outer Join è equivalente alla Left Outer Join scambiando le tabelle_
 
 * SQL
   
