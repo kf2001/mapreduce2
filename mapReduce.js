@@ -372,11 +372,12 @@ let proiezione_=prodotti.filter(pp=>prodsco.indexOf(pp.idProd)==-1).map(p=>new O
 
 // ORDINI IN CUI tutti i prodotti sono di almeno 2 categorie  diverse
 /*
-SELECT idOrdine, SELECT count(*) DISTINCT categorie from prodotti,categorie) as div
-FROM dettagli 
-WHERE div >= 2
-GROUP BY idOrdine
 
+SELECT OrderDetails.OrderId, (select count( distinct categoryId)) as ncat 
+FROM OrderDetails, Products
+WHERE OrderDetails.ProductId=Products.ProductId
+GROUP BY OrderDetails.OrderId
+Having ncat>1
 
 */
 
@@ -394,6 +395,21 @@ const groupByCat = (dettagli.reduce((gruppi, cc) => {
   if(diversi>1) gruppi.push(new Object({"ord":cc.orderId, "det":prod.length, "div":diversi}));
   return gruppi;
 }, []))
+
+
+
+/*SELECT idOrdine,
+      
+       (SELECT COUNT(*) DISTINCT categoryId from dettagli, prodotti
+        where dettagli.idProd=prodotti.idProd and detagli.idOrdine=idOrdine
+       
+         ) AS cat_count 
+FROM ordini 
+GROUP BY idOrdine
+HAVING cat_count > 1;
+*/
+SELECT (SELECT count(DISTINCT categoryId) from OrderDetails, Products where OrderDetails.ProductId=Products.ProductId ), Orders.OrderId as ordid, OrderDetails.OrderDetailId as detId  from OrderDetails, Orders where OrderDetails.Orderid=Orders.OrderId group by ordid, detId
+
 
 //console.table(groupByCat)
 

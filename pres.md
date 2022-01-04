@@ -245,10 +245,12 @@ c
 
     
 
-### Binning
+### Altre funzioni tipiche di Hadoop
+    
+#### Binning
 
-#### Tipico pattern in Hadoop: suddivide i record in base ad un criterio
-##### Esempio: suddividere i prodotti in 4 categorie in base al prezzo
+#####  Suddivide i record in base ad un criterio
+###### Esempio: suddividere i prodotti in 4 categorie in base al prezzo
 
 * JS
   
