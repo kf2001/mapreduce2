@@ -172,6 +172,8 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
   
         const minPrezzo = prodotti.map(cc => cc.unitPrice).reduce((min, d) => d < min ? d : min);
 
+---
+
 
 #### AVG
 
@@ -184,7 +186,8 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
 * JS
   
         const avgPrezzo = prodotti.map(cc => cc.unitPrice).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
-c
+
+---
 
 #### TOP N
 
@@ -200,6 +203,7 @@ c
         const topN = prodotti.sort( (a, b) =>  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
 
 
+----
 
 ### GROUP BY
 
@@ -218,6 +222,9 @@ c
   return gruppi;
 }, {})
 
+
+---
+
 ###### _Numero di clienti per Paese_
 
 * SQL 
@@ -234,6 +241,7 @@ c
 
         let filtra = Object.entries(groupByClientiCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
 
+---
 
 ###### _Numero di ordini per cliente (almeno 5)_
 
@@ -255,11 +263,11 @@ c
         .filter(o => o.n >= 5)
 
 
-    
+----
 
-### Altre funzioni tipiche di Hadoop
+### ALTRE FUNZIONI TIPICHE DI HADOOP
     
-#### Binning
+#### BINNING
 
 #####  Suddivide i record in base ad un criterio
 ###### Esempio: suddividere i prodotti in 4 categorie in base al prezzo
@@ -275,10 +283,10 @@ c
         return cate;
         }, { molto_economici: [], economici: [], costosi: [], lusso: [] })
 
-### Indice invertito
+#### INDICE INVERTITO
 
 #### Si usa per creare strutture tipo dizionario
-##### Esempio: per ogni mese fornire l'elenco dei clienti che hanno effettuato almeno un ordine
+##### Esempio 1: per ogni mese fornire l'elenco dei clienti che hanno effettuato almeno un ordine
 
 * JS
 
@@ -290,7 +298,7 @@ c
         return mesi;
         }, {})
 
-##### Esempio: per ogni cliente fornire le date degli ordini
+##### Esempio 2: per ogni cliente fornire le date degli ordini
 
 * JS
   
@@ -301,14 +309,12 @@ c
 
 
 
----
+----
 
 ### JOINS
 #### Combinare due o più tabelle che si relazionano attraverso una o più colonne
 
-#### LEFT OUTER JOIN
-
-##### _filtra tutti i valori della prima tabella anche se non hanno corrispondenza nella seconda tabella_
+#### LEFT OUTER JOIN: _filtra tutti i valori della prima tabella anche se non hanno corrispondenza nella seconda tabella_
 
 * SQL
   
@@ -328,10 +334,9 @@ c
         }
         , [])
 
+---
 
-
-#### RIGHT OUTER JOIN
-##### _conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima_
+#### RIGHT OUTER JOIN: _conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima_
 ##### _la Right Outer Join è equivalente alla Left Outer Join scambiando le tabelle_
 
 * SQL
@@ -355,6 +360,8 @@ c
         }, [])
 
 
+---
+
 #### INNER JOIN (NATURAL JOIN)
 ##### _Inner Join e Natural Join sono molto simili: cambia solo il numero di colonne restituite_
 ##### _Con questa soluzione facciamo prima il prodotto cartesiano tra le due tabelle e poi filtriamo solo i record con i valori della colonna "cerniera" uguali_
@@ -371,24 +378,27 @@ c
         
         let natjoin = prod_cart.filter(f => (f.categoryId == f.idCat))
 
-
+----
 
  ### SUBQUERY
 
- ##### Esempio: elenco dei clienti che hanno fatto almeno un ordine 
+ ##### Esempio 1: elenco dei clienti che hanno fatto almeno un ordine 
 
  * SQL
   
         SELECT *
         FROM clienti
         WHERE id IN ( SELECT customerId FROM ordini)
-) 
+
 
 * JS
 
         const elenco_clienti=clienti.filter(cl=>ordini.filter(oo=>oo.customerId=cl.idCli))
 
- ##### Esempio: elenco dei prodotti che sono stati ordinati almeno una volta in quantità superiore a 100 unità 
+
+---
+
+ ##### Esempio 2: elenco dei prodotti che sono stati ordinati almeno una volta in quantità superiore a 100 unità 
 
  * SQL
   
@@ -396,17 +406,25 @@ c
         FROM prodotti 
         WHERE productId IN (SELECT productId from dettagli WHERE quantity>100)
 
--%--
+* JS
+
+        let prod=dettagli.map(d=>d.prodotti.flat()).reduce((acc, val) => acc.concat(val), []).
+        filter(v=>v.quantity>100).map(pp=>pp.productId)
+        let proj=prodotti.filter(pp=>prod.includes(pp.idProd))
+        .map(p=>new Object({"id":p.idProd, "descr":p.name}))
+
+---
 
 
- ##### Esempio: elenco degli ordini che comprendono prodotti di almeno due categorie diverse 
+ ##### Esempio 3: elenco degli ordini che comprendono prodotti di almeno due categorie diverse 
 
  * SQL
   
-        SELECT idOrdine, SELECT count(*) DISTINCT categorie from prodotti,categorie) as diverse
-        FROM dettagli 
-        WHERE diverse >= 2
-        GROUP BY idOrdine
+        SELECT Detttagli.OrderId, (SELECT COUNT( DISTINCT categoryId)) as ncat 
+        FROM Dettagli, Prodotti
+        WHERE Dettagli.ProductId=Prodotti.ProductId
+        GROUP BY Dettagli.OrderId
+        HAVING ncat>1
 
 
 * JS

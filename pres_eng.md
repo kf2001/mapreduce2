@@ -404,6 +404,13 @@ You can download all files from [GitHub](https://github.com/kf2001/mapreduce2.gi
         FROM products 
         WHERE productId IN (SELECT productId from details WHERE quantity>100)
 
+* JS 
+  
+        let prod=details.map(d=>d.products.flat()).reduce((acc, val) => acc.concat(val), []).
+        filter(v=>v.quantity>100).map(pp=>pp.productId)
+        let proj=products.filter(pp=>prod.includes(pp.idProd))
+        .map(p=>new Object({"id":p.idProd, "descr":p.name}))
+
 ---
 
 
