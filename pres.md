@@ -1,4 +1,5 @@
-# Map - Reduce & SQL in Javascript
+<base target="_blank" > 
+# MapReduce & SQL in Javascript
 
 
  Il paradigma MapReduce è alla base di framework di calcolo parallelo come _Apache Hadoop_ per elaborare enormi quantità di dati.
@@ -9,11 +10,14 @@ In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche s
 
 In Javascript possiamo combinare la potente programmazione funzionale con la semplicità nella gestione degli array in modo molto utile e divertente.
 
+---
+
 Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l'aiuto di [_mockaroo_](https://mockaroo.com).
 Rimando ad altri ottimi articoli, come [questo](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [questo](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [questo](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) o [questo](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), la spiegazione dell'uso di map(), reduce(), filter(), sort(), Set(), l'operatore Spread [...].
 
 Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git)
 
+----
 
 ### OPERAZIONI FONDAMENTALI SULLE TABELLE
 
@@ -33,6 +37,7 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
   
         let proiez = clienti.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country }));
 
+---
 
 #### SELEZIONE
 
@@ -50,6 +55,8 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
 * Javascript
   
        let selez = clienti.filter(cc=>cc.country=="UK")
+
+---
 
 #### PRODOTTO CARTESIANO
 
@@ -69,7 +76,9 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
             'd1', 'd2', 'd3'
         */  ] 
 
-### CLAUSOLA DISTINCT
+---
+
+#### CLAUSOLA DISTINCT
 
 ##### Elimina i record uguali: in Javascript possiamo usare l'oggetto Set()
 ###### Elenco dei Paesi rappresentati
@@ -86,9 +95,9 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
        const distinct = Array.from(new Set(clienti.map(cc => cc.country))).sort()
 
 
+---
 
-
-### SORTING
+#### SORTING
 
 ##### Per ordinare i record usiamo la funzione sort
 
@@ -101,7 +110,7 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
   
         let sorted = clienti.sort((a,b)=> ( b.companyName < a.companyName));
 
-    
+----
 
 ### FUNZIONI DI AGGREGAZIONE
 
@@ -115,7 +124,8 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
 * JS
   
         let numero_clienti = clienti.reduce((count, val) => count + 1, 0);
-    
+
+---
 
 #### SUM
 
@@ -134,6 +144,7 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
         
         let totp_alt = prodotti.reduce((sum, prod) => sum + prod.unitsInStock, 0);
 
+---
 
 #### MAX
 
@@ -147,6 +158,7 @@ Puoi scaricare tutti i file da [GitHub](https://github.com/kf2001/mapreduce2.git
   
         const maxPrezzo = prodotti.map(cc => cc.unitPrice).reduce((max, d) => d > max ? d : max);
 
+--- 
 
 #### MIN
 

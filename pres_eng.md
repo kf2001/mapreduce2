@@ -1,25 +1,29 @@
-# Map - Reduce & SQL in Javascript
+<base target="_blank" > 
 
 
-The MapReduce paradigm is the basis of parallel computing frameworks like _Apache Hadoop_ that process huge amounts of data.
+
+# MapReduce & SQL in Javascript
+
+
+The MapReduce paradigm is at the basis of parallel computing frameworks like _Apache Hadoop_ that process huge amounts of data.
 
 It's a kind of _functional programming_, where functions can be passed as arguments to other functions, which in turn return functions, and so on.
 
 In this way, we can write very compact and elegant algorithms, although a little cryptic.
 
-In Javascript possiamo combinare la potente programmazione funzionale con la semplicità nella gestione degli array in modo molto utile e divertente.
-
 In Javascript we can combine the powerful of functional programming with the easygoing management of arrays and objects in a very useful and fun way.
+
+---
 
 For my examples I was inspired by typical queries in SQL, imagining as database tables some arrays of javascript objects taken from the well-known sample database "Northwind".
 
-Please refer to other very useful articles, i.e [this](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [this](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [this](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) or [this](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), for the basic explanations of the functions map(), reduce(), filter(), sort(), the Set() object, and the Spread operator [...].
+Please refer to very good articles, i.e [this](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f), [this](https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples), [this](https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript) or [this](https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html), for a basic explanation of the functions map(), reduce(), filter(), sort(), the Set() object, and the Spread operator [...].
 
+You can download all files from [GitHub](https://github.com/kf2001/mapreduce2.git)
 
-You can download all the files from [GitHub](https://github.com/kf2001/mapreduce2.git)
+----
 
-
-### BASI OPERATIONS ON THE TABLES
+### BASIC OPERATIONS ON TABLES
 
 ##### PROJECTION
 
@@ -30,13 +34,13 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
  * SQL 
 
         SELECT id, companyName, country 
-        FROM clients
+        FROM customers
 
    
 * Javascript
   
-        let projection = clients.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country }));
-
+        let projection = customers.map(c=>new Object({"id":c.id,"companyName": c.companyName, "country":c.country }));
+---
 
 #### SELECTION
 
@@ -47,17 +51,19 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
  * SQL 
 
         SELECT *
-        FROM clients
+        FROM customers
         WHERE country = "UK"
 
    
 * Javascript
   
-       let selez = clients.filter(cc=>cc.country=="UK")
+       let selez = customers.filter(cc=>cc.country=="UK")
+
+---
 
 #### CARTESIAN PRODUCT
 
-##### the Cartesian Product between two sets is given by all the elements of A combined with each element of B
+##### The Cartesian Product between two sets is given by all the elements of A combined with each element of B
 
 * JS
   
@@ -73,58 +79,60 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
             'd1', 'd2', 'd3'
         */  ] 
 
-### DISTINCT CLAUSE
+
+---
+
+#### DISTINCT CLAUSE
 
 ##### Retrieves only distinct (unique) values in a specified list of columns: in Javascript we can use the Set() object
-###### List of countries in the clients table
+###### Example: List the countries in the customers table
 
- * SQL 
+* SQL 
 
         SELECT DISTINCT country 
-        FROM clients
+        FROM customers
         ORDER BY country
 
    
 * Javascript
   
-       const distinct = Array.from(new Set(clients.map(cc => cc.country)))
+       const distinct = Array.from(new Set(customers.map(cc => cc.country)))
 
 
+---
 
-
-### SORTING
+#### SORTING
 
 ##### To sort the records we use the sort() function
 
 * SQL 
   
         SELECT * 
-        FROM clients 
+        FROM customers 
         ORDER BY companyName
 * JS
   
-        let sorted = clients.sort((a,b)=> ( b.companyName < a.companyName));
+        let sorted = customers.sort((a,b)=> ( b.companyName < a.companyName));
 
-    
+ ----   
 
-### AGGREGATION FUNCTONS
+### AGGREGATION FUNCTIONS
 
 #### COUNT
-##### _Total amount of clients_
+##### Example: _Total customers number_
 
 * SQL 
   
         SELECT COUNT(*) 
-        FROM clients
+        FROM customers
 * JS
   
-        let clients_amount = clients.reduce((count, val) => count + 1, 0);
-    
+        let customers_amount = customers.reduce((count, val) => count + 1, 0);
+---    
 
 #### SUM
 
-
-###### _Total products in stock_
+###### Example: _Total products in stock_
 
 * SQL 
   
@@ -138,10 +146,11 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
         
         let totp_alt = products.reduce((sum, prod) => sum + prod.unitsInStock, 0);
 
+---
 
 #### MAX
 
-###### _Highest price of all products_
+######  Example: _Highest price of all products_
 
 * SQL 
   
@@ -151,10 +160,11 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
   
         const maxPrice = products.map(cc => cc.unitPrice).reduce((max, d) => d > max ? d : max);
 
+---
 
 #### MIN
 
-###### _Lowest price_
+######  Example: _Lowest price_
 
 * SQL 
   
@@ -164,10 +174,11 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
   
         const minPrice = products.map(cc => cc.unitPrice).reduce((min, d) => d < min ? d : min);
 
+---
 
 #### AVG
 
-###### _Average price_
+######  Example: _Average price_
 
 * SQL 
   
@@ -176,11 +187,12 @@ You can download all the files from [GitHub](https://github.com/kf2001/mapreduce
 * JS
   
         const avgPrice = products.map(cc => cc.unitPrice).reduce( (r, p) =>{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
-c
+
+---
 
 #### TOP N
 
-###### _The ten most expensive products_
+######  Example: _The ten most expensive products_
 
 * SQL 
   
@@ -191,11 +203,11 @@ c
   
         const topN = products.sort( (a, b) =>  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
 
-
+----
 
 ### GROUP BY
 
-###### _Total products for each category_
+######  Example 1:_Total products for each category_
 
 * SQL 
   
@@ -210,7 +222,9 @@ c
         return groups;
         }, {})
 
-###### _Total customers for each country_
+---
+
+######  Example 2:_Total customers for each country_
 
 * SQL 
   
@@ -226,8 +240,9 @@ c
 
         let filtra = Object.entries(groupByCustomersCountry).map(kk => new Object({ c: kk[0], n: kk[1] })).sort((a, b) => b.n - a.n)
 
+---
 
-###### _Total orders for each customer (minimum 5)_
+######  Example 3: _Total orders for each customer (minimum 5)_
 
 * SQL 
   
@@ -247,13 +262,12 @@ c
         .filter(o => o.n >= 5)
 
 
-    
+----
 
-### Other typical Hadoop functions
+### FURTHER TYPICAL HADOOP FUNCTIONS
     
-#### Binning
-
-#####  Splits records based on criteria
+#### BINNING
+#####  Splits records based on a criterion
 ###### Example: split products into 4 categories based on price 
 
 * JS
@@ -267,10 +281,12 @@ c
         return cate;
         }, { very_cheap: [], cheap: [], expensive: [], luxury: [] })
 
-### Inverted Index
+---
 
-#### It is used to create dictionary-like structures
-##### Example 1: for each month, provide the list of customers who have placed at least one order
+#### INVERTED INDEX
+
+#### Used to create dictionary-like structures
+##### Example 1: for each month, provide the list of the customers who placed at least one order
 
 * JS
 
@@ -282,7 +298,9 @@ c
         return months;
         }, {})
 
-##### Example 2: for each customer provide the dates of the orders
+---
+
+##### Example 2: for each customer provide all the orders dates
 
 * JS
   
@@ -291,16 +309,12 @@ c
         return order_dates;
         }, {})    
 
-
-
----
+----
 
 ### JOINS
-#### Combine two or more tables that relate through one or more columns
+#### Used to combine two or more tables that relate through one or more columns
 
-#### LEFT OUTER JOIN
-
-##### _filters all values in the first table even if they don't match in the second table_
+#### LEFT OUTER JOIN: _filters all the values in the first table even if they don't match in the second table_
 
 * SQL
   
@@ -320,11 +334,9 @@ c
         }
         , [])
 
+---
 
-
-#### RIGHT OUTER JOIN
-##### _conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima_
-##### _retains all values from the second table even if they don't match the first_
+#### RIGHT OUTER JOIN: _retains all the values from the second table even if they don't match the first_
 
 * SQL
   
@@ -346,6 +358,7 @@ c
         return roj;
         }, [])
 
+---
 
 #### INNER JOIN (NATURAL JOIN)
 ##### _Inner Join and Natural Join are very similar - only the number of columns returned changes_
@@ -364,31 +377,34 @@ c
         let natjoin = prod_cart.filter(f => (f.categoryId == f.idCat))
 
 
+----
 
  ### SUBQUERY
 
- ##### Example 1: list of customers who have placed at least one order 
+ ##### Example 1: list all customers who have placed at least one order 
 
  * SQL
   
         SELECT *
         FROM customers
         WHERE id IN ( SELECT customerId FROM orders)
-) 
+
 
 * JS
 
         const customer_list=customers.filter(cl=>orders.filter(oo=>oo.customerId=cl.idCli))
 
- ##### Example 2:list of products that have been ordered at least once in quantities greater than 100 units 
+---
+
+ ##### Example 2: list all products that have been ordered at least once in quantities greater than 100 units 
 
  * SQL
   
-        SELECT DISTINCT idProd as id, nome as descr
+        SELECT DISTINCT idProd as id, name as descr
         FROM products 
         WHERE productId IN (SELECT productId from details WHERE quantity>100)
 
--%--
+---
 
 
  ##### Example 3: list of orders that include products of at least two different categories 

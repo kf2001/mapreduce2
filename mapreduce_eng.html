@@ -1,0 +1,759 @@
+<!DOCTYPE html><html><head>
+      <title>pres_eng</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\ennio\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <base target="_blank"> 
+<h1 class="mume-header" id="mapreduce-sql-in-javascript">MapReduce &amp; SQL in Javascript</h1>
+
+<p>The MapReduce paradigm is at the basis of parallel computing frameworks like <em>Apache Hadoop</em> that process huge amounts of data.</p>
+<p>It&apos;s a kind of <em>functional programming</em>, where functions can be passed as arguments to other functions, which in turn return functions, and so on.</p>
+<p>In this way, we can write very compact and elegant algorithms, although a little cryptic.</p>
+<p>In Javascript we can combine the powerful of functional programming with the easygoing management of arrays and objects in a very useful and fun way.</p>
+<hr>
+<p>For my examples I was inspired by typical queries in SQL, imagining as database tables some arrays of javascript objects taken from the well-known sample database &quot;Northwind&quot;.</p>
+<p>Please refer to very good articles, i.e <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">this</a>, <a href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples">this</a>, <a href="https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript">this</a> or <a href="https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html">this</a>, for a basic explanation of the functions map(), reduce(), filter(), sort(), the Set() object, and the Spread operator [...].</p>
+<p>You can download all files from <a href="https://github.com/kf2001/mapreduce2.git">GitHub</a></p>
+<hr>
+<h3 class="mume-header" id="basic-operations-on-tables">BASIC OPERATIONS ON TABLES</h3>
+
+<h5 class="mume-header" id="projection">PROJECTION</h5>
+
+<h5 class="mume-header" id="the-_projection_-is-a-filtering-on-the-columns">The <em>projection</em> is a filtering on the columns</h5>
+
+<h6 class="mume-header" id="for-example-from-the-customers-table-we-want-to-display-only-some-fields">For example, from the <strong>CUSTOMERS</strong> table we want to display only some fields</h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text"> SELECT id, companyName, country 
+ FROM customers
+</pre>
+</li>
+<li>
+<p>Javascript</p>
+<pre class="language-text">  let projection = customers.map(c=&gt;new Object({&quot;id&quot;:c.id,&quot;companyName&quot;: c.companyName, &quot;country&quot;:c.country }));
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="selection">SELECTION</h4>
+
+<h5>the <em>selection</em> is a filtering on the rows</h5>
+<h6 class="mume-header" id="from-table-customers-we-only-want-customers-who-come-from-uk">From table <strong>CUSTOMERS</strong> we only want customers who come from UK</h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text"> SELECT *
+ FROM customers
+ WHERE country = &quot;UK&quot;
+</pre>
+</li>
+<li>
+<p>Javascript</p>
+<pre class="language-text"> let selez = customers.filter(cc=&gt;cc.country==&quot;UK&quot;)
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="cartesian-product">CARTESIAN PRODUCT</h4>
+
+<h5 class="mume-header" id="the-cartesian-product-between-two-sets-is-given-by-all-the-elements-of-a-combined-with-each-element-of-b">The Cartesian Product between two sets is given by all the elements of A combined with each element of B</h5>
+
+<ul>
+<li>
+<p>JS</p>
+<pre class="language-text">  let a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]
+  let b = [1, 2, 3]
+
+  let prod = [].concat(...a.map(p =&gt; b.map(b =&gt; p + b)))
+
+  /* [
+      &apos;a1&apos;, &apos;a2&apos;, &apos;a3&apos;,
+      &apos;b1&apos;, &apos;b2&apos;, &apos;b3&apos;,
+      &apos;c1&apos;, &apos;c2&apos;, &apos;c3&apos;,
+      &apos;d1&apos;, &apos;d2&apos;, &apos;d3&apos;
+  */  ] 
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="distinct-clause">DISTINCT CLAUSE</h4>
+
+<h5 class="mume-header" id="retrieves-only-distinct-unique-values-in-a-specified-list-of-columns-in-javascript-we-can-use-the-set-object">Retrieves only distinct (unique) values in a specified list of columns: in Javascript we can use the Set() object</h5>
+
+<h6 class="mume-header" id="example-list-the-countries-in-the-customers-table">Example: List the countries in the customers table</h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT DISTINCT country 
+  FROM customers
+  ORDER BY country
+</pre>
+</li>
+<li>
+<p>Javascript</p>
+<pre class="language-text"> const distinct = Array.from(new Set(customers.map(cc =&gt; cc.country)))
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="sorting">SORTING</h4>
+
+<h5 class="mume-header" id="to-sort-the-records-we-use-the-sort-function">To sort the records we use the sort() function</h5>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT * 
+  FROM customers 
+  ORDER BY companyName
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  let sorted = customers.sort((a,b)=&gt; ( b.companyName &lt; a.companyName));
+</pre>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="aggregation-functions">AGGREGATION FUNCTIONS</h3>
+
+<h4 class="mume-header" id="count">COUNT</h4>
+
+<h5 class="mume-header" id="example-_total-customers-number_">Example: <em>Total customers number</em></h5>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT COUNT(*) 
+  FROM customers
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  let customers_amount = customers.reduce((count, val) =&gt; count + 1, 0);
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="sum">SUM</h4>
+
+<h6 class="mume-header" id="example-_total-products-in-stock_">Example: <em>Total products in stock</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT SUM(unitsInStock) 
+  FROM products
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text"> let totp = products.map(prod =&gt; prod.unitsInStock).reduce((sum, cc) =&gt; sum + cc, 0);
+  
+  //or
+  
+  let totp_alt = products.reduce((sum, prod) =&gt; sum + prod.unitsInStock, 0);
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="max">MAX</h4>
+
+<h6 class="mume-header" id="example-_highest-price-of-all-products_">Example: <em>Highest price of all products</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT MAX(unitPrice)
+  FROM products
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const maxPrice = products.map(cc =&gt; cc.unitPrice).reduce((max, d) =&gt; d &gt; max ? d : max);
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="min">MIN</h4>
+
+<h6 class="mume-header" id="example-_lowest-price_">Example: <em>Lowest price</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT MIN(unitPrice)
+  FROM products
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const minPrice = products.map(cc =&gt; cc.unitPrice).reduce((min, d) =&gt; d &lt; min ? d : min);
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="avg">AVG</h4>
+
+<h6 class="mume-header" id="example-_average-price_">Example: <em>Average price</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT AVG(unitPrice)
+  FROM products
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const avgPrice = products.map(cc =&gt; cc.unitPrice).reduce( (r, p) =&gt;{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="top-n">TOP N</h4>
+
+<h6 class="mume-header" id="example-_the-ten-most-expensive-products_">Example: <em>The ten most expensive products</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT TOP 10(unitPrice) 
+  FROM products
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const topN = products.sort( (a, b) =&gt;  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
+</pre>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="group-by">GROUP BY</h3>
+
+<h6 class="mume-header" id="example-1_total-products-for-each-category_">Example 1:<em>Total products for each category</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT categoryId, COUNT(*) 
+  FROM products
+  GROUP BY(categoryId)
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const groupByCategory = products.reduce((groups, cc) =&gt; {
+  groups[cc.categoryId] = (groups[cc.categoryId] || 0) + 1;
+  return groups;
+  }, {})
+</pre>
+</li>
+</ul>
+<hr>
+<h6 class="mume-header" id="example-2_total-customers-for-each-country_">Example 2:<em>Total customers for each country</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT country, COUNT(*)
+  FROM customers
+  GROUP BY(country)
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const groupByCustomersCountry = customers.reduce((gruppi, cc) =&gt; {groups[cc.country] = (groups[cc.country] || 0) + 1; return groups;}, {})
+</pre>
+<p>then sort by total customers</p>
+<pre class="language-text">  let filtra = Object.entries(groupByCustomersCountry).map(kk =&gt; new Object({ c: kk[0], n: kk[1] })).sort((a, b) =&gt; b.n - a.n)
+</pre>
+</li>
+</ul>
+<hr>
+<h6 class="mume-header" id="example-3-_total-orders-for-each-customer-minimum-5_">Example 3: <em>Total orders for each customer (minimum 5)</em></h6>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT customerId, count(*)
+  FROM orders
+  GROUP BY customerId 
+  HAVING count(*) &gt;= 5
+  ORDER BY count(*) DESC
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const OrdersgroupByCustomer = Object.entries(orders.reduce((groups, cc) =&gt; {
+  groups[cc.customerId] = (groups[cc.customerId] || 0) + 1;
+  return gruppi;
+  }, {}))
+  .map(kk =&gt; new Object({ c: kk[0], n: kk[1] })).sort((a, b) =&gt; b.n - a.n)
+  .filter(o =&gt; o.n &gt;= 5)
+</pre>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="further-typical-hadoop-functions">FURTHER TYPICAL HADOOP FUNCTIONS</h3>
+
+<h4 class="mume-header" id="binning">BINNING</h4>
+
+<h5 class="mume-header" id="splits-records-based-on-a-criterion">Splits records based on a criterion</h5>
+
+<h6 class="mume-header" id="example-split-products-into-4-categories-based-on-price">Example: split products into 4 categories based on price</h6>
+
+<ul>
+<li>
+<p>JS</p>
+<pre class="language-text">  const categ = products.reduce((cate, cc) =&gt; {
+  let pr = parseInt(cc.unitPrice)
+  if (pr &lt; 4) cate[&quot;very_cheap&quot;].push(cc)
+  else if (pr &lt; 10) cate[&quot;cheap&quot;].push(cc)
+  else if (pr &lt; 50) cate[&quot;expensive&quot;].push(cc)
+  else cate[&quot;luxury&quot;].push(cc)
+  return cate;
+  }, { very_cheap: [], cheap: [], expensive: [], luxury: [] })
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="inverted-index">INVERTED INDEX</h4>
+
+<h4 class="mume-header" id="used-to-create-dictionary-like-structures">Used to create dictionary-like structures</h4>
+
+<h5 class="mume-header" id="example-1-for-each-month-provide-the-list-of-the-customers-who-placed-at-least-one-order">Example 1: for each month, provide the list of the customers who placed at least one order</h5>
+
+<ul>
+<li>
+<p>JS</p>
+<pre class="language-text">  const invIndex = orders.reduce((months, ord) =&gt; {
+  let year=new Date(ord.orderDate).getFullYear()
+  let month=new Date(ord.orderDate).getMonth()
+  let key=month+&quot;-&quot;+year
+  months[key] = (months[key] || new Set()).add(ord.customerId);
+  return months;
+  }, {})
+</pre>
+</li>
+</ul>
+<hr>
+<h5 class="mume-header" id="example-2-for-each-customer-provide-all-the-orders-dates">Example 2: for each customer provide all the orders dates</h5>
+
+<ul>
+<li>
+<p>JS</p>
+<pre class="language-text">  const invIndex2 = orders.reduce((order_dates, cc) =&gt; {
+  order_dates[cc.customerId] = (order_dates[cc.customerId] || new Set()).add(cc.orderDate.substr(0,10));
+  return order_dates;
+  }, {})    
+</pre>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="joins">JOINS</h3>
+
+<h4 class="mume-header" id="used-to-combine-two-or-more-tables-that-relate-through-one-or-more-columns">Used to combine two or more tables that relate through one or more columns</h4>
+
+<h4 class="mume-header" id="left-outer-join-_filters-all-the-values-in-the-first-table-even-if-they-dont-match-in-the-second-table_">LEFT OUTER JOIN: <em>filters all the values in the first table even if they don&apos;t match in the second table</em></h4>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT * 
+  FROM products
+  LEFT JOIN categories
+  ON products.categoryId = categories.id;
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const left_join = products.reduce((loj, pp) =&gt; {
+  let lookup_cat = categories.filter(cc =&gt; pp.categoryId == cc.idCat);
+  let union_rec
+  if (lookup_cat.length) union_rec = { ...pp, ...lookup_cat[0] }; else union_rec = pp;
+  loj.push(union_rec)
+  return loj;
+  }
+  , [])
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="right-outer-join-_retains-all-the-values-from-the-second-table-even-if-they-dont-match-the-first_">RIGHT OUTER JOIN: <em>retains all the values from the second table even if they don&apos;t match the first</em></h4>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT * 
+  FROM categories
+  LEFT OUTER JOIN products
+  ON categories.id= products.categoryId;
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text"> const right_join = categories.reduce((roj, cc) =&gt; {
+ let lookup_prod = products.filter(pp =&gt; pp.categoryId == cc.idCat);
+ if (lookup_prod.length == 0) roj.push(cc); else {
+ lookup_prod.map(v =&gt; {
+ let union_rec = { ...cc, ...v }
+ roj.push(union_rec)
+ })
+ }
+ return roj;
+ }, [])
+</pre>
+</li>
+</ul>
+<hr>
+<h4 class="mume-header" id="inner-join-natural-join">INNER JOIN (NATURAL JOIN)</h4>
+
+<h5 class="mume-header" id="_inner-join-and-natural-join-are-very-similar-only-the-number-of-columns-returned-changes_"><em>Inner Join and Natural Join are very similar - only the number of columns returned changes</em></h5>
+
+<h5 class="mume-header" id="_in-this-solution-we-first-make-the-cartesian-product-between-the-two-tables-and-then-filter-only-the-records-with-the-same-hinge-column-values_"><em>In this solution we first make the Cartesian product between the two tables and then filter only the records with the same &quot;hinge&quot; column values</em></h5>
+
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text">  SELECT * 
+  FROM products, categories
+  WHERE products.categoryId = categorie.id;
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  let prod_cart = [].concat(...products.map(pp =&gt; categories.map(cc =&gt; Object.assign({}, { ...pp, ...cc }))))
+  
+  let natjoin = prod_cart.filter(f =&gt; (f.categoryId == f.idCat))
+</pre>
+</li>
+</ul>
+<hr>
+<h3>SUBQUERY</h3>
+<h5>Example 1: list all customers who have placed at least one order</h5>
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text"> SELECT *
+ FROM customers
+ WHERE id IN ( SELECT customerId FROM orders)
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const customer_list=customers.filter(cl=&gt;orders.filter(oo=&gt;oo.customerId=cl.idCli))
+</pre>
+</li>
+</ul>
+<hr>
+<h5>Example 2: list all products that have been ordered at least once in quantities greater than 100 units</h5>
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text"> SELECT DISTINCT idProd as id, name as descr
+ FROM products 
+ WHERE productId IN (SELECT productId from details WHERE quantity&gt;100)
+</pre>
+</li>
+</ul>
+<hr>
+<h5>Example 3: list of orders that include products of at least two different categories</h5>
+<ul>
+<li>
+<p>SQL</p>
+<pre class="language-text"> SELECT Details.OrderId, (SELECT COUNT( DISTINCT categoryId)) as ncat 
+ FROM Details, Products
+ WHERE Details.ProductId=Products.ProductId
+ GROUP BY Details.OrderId
+ HAVING ncat&gt;1
+</pre>
+</li>
+<li>
+<p>JS</p>
+<pre class="language-text">  const groupByCat = (details.reduce((groups, cc) =&gt; {
+  var prod=[]
+  cc.products.forEach(pp=&gt;prod.push(rispc[pp.productId]))
+  let diversi=new Set(prod).size 
+  if(diversi&gt;1) groups.push(new Object({&quot;ord&quot;:cc.orderId, &quot;det&quot;:prod.length, &quot;div&quot;:diversi}));
+  return groups;
+  }, []))
+</pre>
+</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
