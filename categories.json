@@ -1,0 +1,52 @@
+[
+    {
+        "idCat": 2,
+        "descrCat": "Sweet and savory sauces relishes spreads and seasonings",
+        "name": "Condiments"
+    },
+    {
+        "idCat": 1,
+        "descrCat": "Soft drinks coffees teas beers and ales",
+        "name": "Beverages"
+    },
+    {
+        "idCat": 3,
+        "descrCat": "Desserts candies and sweet breads",
+        "name": "Confections"
+    },
+    {
+        "idCat": 4,
+        "descrCat": "Cheeses",
+        "name": "Dairy Products"
+    },
+    {
+        "idCat": 5,
+        "descrCat": "Breads crackers pasta and cereal",
+        "name": "Grains/Cereals"
+    },
+    {
+        "idCat": 6,
+        "descrCat": "Prepared meats",
+        "name": "Meat/Poultry"
+    },
+    {
+        "idCat": 7,
+        "descrCat": "Dried fruit and bean curd",
+        "name": "Produce"
+    },
+    {
+        "idCat": 8,
+        "descrCat": "Seaweed and fish",
+        "name": "Seafood"
+    },
+    {
+        "idCat": 9,
+        "descrCat": "Toothpick",
+        "name": "Non food"
+    },
+    {
+        "idCat": 10,
+        "descrCat": "Little Green Bag",
+        "name": "Bags"
+    }
+]

@@ -1,14 +1,7 @@
 <!DOCTYPE html><html><head>
-      <title>pres</title>
+      <title>pres_eng</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <link rel="stylesheet" href="file:///c:\Users\ennio\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
-      
-      
-      
-      
-      
       
       
       
@@ -262,62 +255,62 @@ pre[data-line] .line-highlight[data-end]:after {
     <body for="html-export">
       <div class="mume markdown-preview  ">
       <base target="_blank"> 
-#  MapReduce &amp; SQL in Javascript
+<h1 class="mume-header" id="mapreduce-sql-in-javascript">MapReduce &amp; SQL in Javascript</h1>
 
-<p>Il paradigma MapReduce &#xE8; alla base di framework di calcolo parallelo come <em>Apache Hadoop</em> per elaborare enormi quantit&#xE0; di dati.</p>
-<p>Si fonda su un tipo di <em>programmazione funzionale</em>, dove cio&#xE8; si possono passare funzioni come argomento di altre funzioni, che a loro volta restituiscono funzioni, e cos&#xEC; via.</p>
-<p>In questo modo si possono scrivere algoritmi molto compatti ed eleganti, anche se un po&apos; criptici.</p>
-<p>In Javascript possiamo combinare la potente programmazione funzionale con la semplicit&#xE0; nella gestione degli array in modo molto utile e divertente.</p>
+<p>The MapReduce paradigm is at the basis of parallel computing frameworks like <em>Apache Hadoop</em> that process huge amounts of data.</p>
+<p>It&apos;s a kind of <em>functional programming</em>, where functions can be passed as arguments to other functions, which in turn return functions, and so on.</p>
+<p>In this way, we can write very compact and elegant algorithms, although a little cryptic.</p>
+<p>In Javascript we can combine the powerful of functional programming with the easygoing management of arrays and objects in a very useful and fun way.</p>
 <hr>
-<p>Per gli esempi utilizzati mi sono ispirato a delle tipiche query in SQL, immaginando come tabelle di database degli array di oggetti javascript creati con l&apos;aiuto di <a href="https://mockaroo.com"><em>mockaroo</em></a>.<br>
-Rimando ad altri ottimi articoli, come <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">questo</a>, <a href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples">questo</a>, <a href="https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript">questo</a> o <a href="https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html">questo</a>, la spiegazione dell&apos;uso di map(), reduce(), filter(), sort(), Set(), l&apos;operatore Spread [...].</p>
-<p>Puoi scaricare tutti i file da <a href="https://github.com/kf2001/mapreduce2.git">GitHub</a></p>
+<p>For my examples I was inspired by typical queries in SQL, imagining as database tables some arrays of javascript objects taken from the well-known sample database &quot;Northwind&quot;.</p>
+<p>Please refer to very good articles, i.e <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">this</a>, <a href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples">this</a>, <a href="https://aulab.it/notizia/239/map-filter-e-reduce-le-3-funzioni-principali-sugli-array-in-javascript">this</a> or <a href="https://michelenasti.com/2017/04/14/javascript-filter-map-reduce.html">this</a>, for a basic explanation of the functions map(), reduce(), filter(), sort(), the Set() object, and the Spread operator [...].</p>
+<p>You can download all files from <a href="https://github.com/kf2001/mapreduce2.git">GitHub</a></p>
 <hr>
-<h3 class="mume-header" id="operazioni-fondamentali-sulle-tabelle">OPERAZIONI FONDAMENTALI SULLE TABELLE</h3>
+<h3 class="mume-header" id="basic-operations-on-tables">BASIC OPERATIONS ON TABLES</h3>
 
-<h5 class="mume-header" id="proiezione">PROIEZIONE</h5>
+<h5 class="mume-header" id="projection">PROJECTION</h5>
 
-<h5 class="mume-header" id="la-_proiezione_-%C3%A8-un-filtraggio-sulle-colonne">La <em>proiezione</em> &#xE8; un filtraggio sulle colonne</h5>
+<h5 class="mume-header" id="the-_projection_-is-a-filtering-on-the-columns">The <em>projection</em> is a filtering on the columns</h5>
 
-<h6 class="mume-header" id="ad-esempio-della-tabella-clienti-vogliamo-visualizzare-solo-alcuni-campi">Ad esempio della tabella <strong>CLIENTI</strong> vogliamo visualizzare solo alcuni campi</h6>
+<h6 class="mume-header" id="for-example-from-the-customers-table-we-want-to-display-only-some-fields">For example, from the <strong>CUSTOMERS</strong> table we want to display only some fields</h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text"> SELECT id, companyName, country 
- FROM clienti
+ FROM customers
 </pre>
 </li>
 <li>
 <p>Javascript</p>
-<pre class="language-text">  let proiez = clienti.map(c=&gt;new Object({&quot;id&quot;:c.id,&quot;companyName&quot;: c.companyName, &quot;country&quot;:c.country }));
+<pre class="language-text">  let projection = customers.map(c=&gt;new Object({&quot;id&quot;:c.id,&quot;companyName&quot;: c.companyName, &quot;country&quot;:c.country }));
 </pre>
 </li>
 </ul>
 <hr>
-<h4 class="mume-header" id="selezione">SELEZIONE</h4>
+<h4 class="mume-header" id="selection">SELECTION</h4>
 
-<h5>la <em>selezione</em> &#xE8; un filtraggio sulle righe</h5>
-<h6 class="mume-header" id="della-tabella-clienti-vogliamo-solo-quelli-provenienti-dal-regno-unito">Della tabella <strong>CLIENTI</strong> vogliamo solo quelli provenienti dal Regno Unito</h6>
+<h5>the <em>selection</em> is a filtering on the rows</h5>
+<h6 class="mume-header" id="from-table-customers-we-only-want-customers-who-come-from-uk">From table <strong>CUSTOMERS</strong> we only want customers who come from UK</h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text"> SELECT *
- FROM clienti
+ FROM customers
  WHERE country = &quot;UK&quot;
 </pre>
 </li>
 <li>
 <p>Javascript</p>
-<pre class="language-text"> let selez = clienti.filter(cc=&gt;cc.country==&quot;UK&quot;)
+<pre class="language-text"> let selez = customers.filter(cc=&gt;cc.country==&quot;UK&quot;)
 </pre>
 </li>
 </ul>
 <hr>
-<h4 class="mume-header" id="prodotto-cartesiano">PRODOTTO CARTESIANO</h4>
+<h4 class="mume-header" id="cartesian-product">CARTESIAN PRODUCT</h4>
 
-<h5 class="mume-header" id="il-prodotto-cartesiano-fra-due-insiemi-%C3%A8-dato-da-tutti-gli-elementi-di-a-combinati-con-ogni-elemento-di-b">il prodotto cartesiano fra due insiemi &#xE8; dato da tutti gli elementi di A combinati con ogni elemento di B</h5>
+<h5 class="mume-header" id="the-cartesian-product-between-two-sets-is-given-by-all-the-elements-of-a-combined-with-each-element-of-b">The Cartesian Product between two sets is given by all the elements of A combined with each element of B</h5>
 
 <ul>
 <li>
@@ -337,209 +330,209 @@ Rimando ad altri ottimi articoli, come <a href="https://www.freecodecamp.org/new
 </li>
 </ul>
 <hr>
-<h4 class="mume-header" id="clausola-distinct">CLAUSOLA DISTINCT</h4>
+<h4 class="mume-header" id="distinct-clause">DISTINCT CLAUSE</h4>
 
-<h5 class="mume-header" id="elimina-i-record-uguali-in-javascript-possiamo-usare-loggetto-set">Elimina i record uguali: in Javascript possiamo usare l&apos;oggetto Set()</h5>
+<h5 class="mume-header" id="retrieves-only-distinct-unique-values-in-a-specified-list-of-columns-in-javascript-we-can-use-the-set-object">Retrieves only distinct (unique) values in a specified list of columns: in Javascript we can use the Set() object</h5>
 
-<h6 class="mume-header" id="elenco-dei-paesi-rappresentati">Elenco dei Paesi rappresentati</h6>
+<h6 class="mume-header" id="example-list-the-countries-in-the-customers-table">Example: List the countries in the customers table</h6>
 
 <ul>
 <li>
 <p>SQL</p>
-<pre class="language-text"> SELECT DISTINCT country 
- FROM clienti 
- ORDER BY country
+<pre class="language-text">  SELECT DISTINCT country 
+  FROM customers
+  ORDER BY country
 </pre>
 </li>
 <li>
 <p>Javascript</p>
-<pre class="language-text"> const distinct = Array.from(new Set(clienti.map(cc =&gt; cc.country))).sort()
+<pre class="language-text"> const distinct = Array.from(new Set(customers.map(cc =&gt; cc.country)))
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="sorting">SORTING</h4>
 
-<h5 class="mume-header" id="per-ordinare-i-record-usiamo-la-funzione-sort">Per ordinare i record usiamo la funzione sort</h5>
+<h5 class="mume-header" id="to-sort-the-records-we-use-the-sort-function">To sort the records we use the sort() function</h5>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT * 
-  FROM clienti 
+  FROM customers 
   ORDER BY companyName
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  let sorted = clienti.sort((a,b)=&gt; ( b.companyName &lt; a.companyName));
+<pre class="language-text">  let sorted = customers.sort((a,b)=&gt; ( b.companyName &lt; a.companyName));
 </pre>
 </li>
 </ul>
 <hr>
-<h3 class="mume-header" id="funzioni-di-aggregazione">FUNZIONI DI AGGREGAZIONE</h3>
+<h3 class="mume-header" id="aggregation-functions">AGGREGATION FUNCTIONS</h3>
 
 <h4 class="mume-header" id="count">COUNT</h4>
 
-<h5 class="mume-header" id="_numero-totale-di-clienti_"><em>Numero totale di clienti</em></h5>
+<h5 class="mume-header" id="example-_total-customers-number_">Example: <em>Total customers number</em></h5>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT COUNT(*) 
-  FROM clienti
+  FROM customers
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  let numero_clienti = clienti.reduce((count, val) =&gt; count + 1, 0);
+<pre class="language-text">  let customers_amount = customers.reduce((count, val) =&gt; count + 1, 0);
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="sum">SUM</h4>
 
-<h6 class="mume-header" id="_totale-prodotti-in-magazzino_"><em>Totale prodotti in magazzino</em></h6>
+<h6 class="mume-header" id="example-_total-products-in-stock_">Example: <em>Total products in stock</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT SUM(unitsInStock) 
-  FROM prodotti
+  FROM products
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text"> let totp = prodotti.map(prod =&gt; prod.unitsInStock).reduce((sum, cc) =&gt; sum + cc, 0);
+<pre class="language-text"> let totp = products.map(prod =&gt; prod.unitsInStock).reduce((sum, cc) =&gt; sum + cc, 0);
   
-  //oppure
+  //or
   
-  let totp_alt = prodotti.reduce((sum, prod) =&gt; sum + prod.unitsInStock, 0);
+  let totp_alt = products.reduce((sum, prod) =&gt; sum + prod.unitsInStock, 0);
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="max">MAX</h4>
 
-<h6 class="mume-header" id="_prezzo-pi%C3%B9-alto_"><em>Prezzo pi&#xF9; alto</em></h6>
+<h6 class="mume-header" id="example-_highest-price-of-all-products_">Example: <em>Highest price of all products</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT MAX(unitPrice)
-  FROM prodotti
+  FROM products
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const maxPrezzo = prodotti.map(cc =&gt; cc.unitPrice).reduce((max, d) =&gt; d &gt; max ? d : max);
+<pre class="language-text">  const maxPrice = products.map(cc =&gt; cc.unitPrice).reduce((max, d) =&gt; d &gt; max ? d : max);
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="min">MIN</h4>
 
-<h6 class="mume-header" id="_prezzo-pi%C3%B9-basso_"><em>Prezzo pi&#xF9; basso</em></h6>
+<h6 class="mume-header" id="example-_lowest-price_">Example: <em>Lowest price</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT MIN(unitPrice)
-  FROM prodotti
+  FROM products
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const minPrezzo = prodotti.map(cc =&gt; cc.unitPrice).reduce((min, d) =&gt; d &lt; min ? d : min);
+<pre class="language-text">  const minPrice = products.map(cc =&gt; cc.unitPrice).reduce((min, d) =&gt; d &lt; min ? d : min);
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="avg">AVG</h4>
 
-<h6 class="mume-header" id="_prezzo-medio_"><em>Prezzo medio</em></h6>
+<h6 class="mume-header" id="example-_average-price_">Example: <em>Average price</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT AVG(unitPrice)
-  FROM prodotti
+  FROM products
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const avgPrezzo = prodotti.map(cc =&gt; cc.unitPrice).reduce( (r, p) =&gt;{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
+<pre class="language-text">  const avgPrice = products.map(cc =&gt; cc.unitPrice).reduce( (r, p) =&gt;{ r.sum += p; ++r.count; return r }, { count: 0, sum: 0 });
 </pre>
 </li>
 </ul>
 <hr>
 <h4 class="mume-header" id="top-n">TOP N</h4>
 
-<h6 class="mume-header" id="_i-dieci-prodotti-pi%C3%B9-costosi_"><em>I dieci prodotti pi&#xF9; costosi</em></h6>
+<h6 class="mume-header" id="example-_the-ten-most-expensive-products_">Example: <em>The ten most expensive products</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT TOP 10(unitPrice) 
-  FROM prodotti
+  FROM products
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const topN = prodotti.sort( (a, b) =&gt;  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
+<pre class="language-text">  const topN = products.sort( (a, b) =&gt;  a.unitPrice - b.unitPrice ).reverse().slice(0, 10)
 </pre>
 </li>
 </ul>
 <hr>
 <h3 class="mume-header" id="group-by">GROUP BY</h3>
 
-<h6 class="mume-header" id="_numero-di-prodotti-per-ogni-categoria_"><em>Numero di prodotti per ogni categoria</em></h6>
+<h6 class="mume-header" id="example-1_total-products-for-each-category_">Example 1:<em>Total products for each category</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT categoryId, COUNT(*) 
-  FROM prodotti
+  FROM products
   GROUP BY(categoryId)
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const groupByCategory = prodotti.reduce((gruppi, cc) =&gt; {
+<pre class="language-text">  const groupByCategory = products.reduce((groups, cc) =&gt; {
+  groups[cc.categoryId] = (groups[cc.categoryId] || 0) + 1;
+  return groups;
+  }, {})
 </pre>
-<p>gruppi[cc.categoryId] = (gruppi[cc.categoryId] || 0) + 1;<br>
-return gruppi;<br>
-}, {})</p>
 </li>
 </ul>
 <hr>
-<h6 class="mume-header" id="_numero-di-clienti-per-paese_"><em>Numero di clienti per Paese</em></h6>
+<h6 class="mume-header" id="example-2_total-customers-for-each-country_">Example 2:<em>Total customers for each country</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT country, COUNT(*)
-  FROM CLIENTI 
+  FROM customers
   GROUP BY(country)
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const groupClientiByCountry = clienti.reduce((gruppi, cc) =&gt; {gruppi[cc.country] = (gruppi[cc.country] || 0) + 1; return gruppi;}, {})
+<pre class="language-text">  const groupByCustomersCountry = customers.reduce((gruppi, cc) =&gt; {groups[cc.country] = (groups[cc.country] || 0) + 1; return groups;}, {})
 </pre>
-<p>poi ordinare in base al numero di clienti</p>
-<pre class="language-text">  let filtra = Object.entries(groupByClientiCountry).map(kk =&gt; new Object({ c: kk[0], n: kk[1] })).sort((a, b) =&gt; b.n - a.n)
+<p>then sort by total customers</p>
+<pre class="language-text">  let filtra = Object.entries(groupByCustomersCountry).map(kk =&gt; new Object({ c: kk[0], n: kk[1] })).sort((a, b) =&gt; b.n - a.n)
 </pre>
 </li>
 </ul>
 <hr>
-<h6 class="mume-header" id="_numero-di-ordini-per-cliente-almeno-5_"><em>Numero di ordini per cliente (almeno 5)</em></h6>
+<h6 class="mume-header" id="example-3-_total-orders-for-each-customer-minimum-5_">Example 3: <em>Total orders for each customer (minimum 5)</em></h6>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT customerId, count(*)
-  FROM ordini
+  FROM orders
   GROUP BY customerId 
   HAVING count(*) &gt;= 5
   ORDER BY count(*) DESC
@@ -547,8 +540,8 @@ return gruppi;<br>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const OrdinigroupByCliente = Object.entries(ordini.reduce((gruppi, cc) =&gt; {
-  gruppi[cc.customerId] = (gruppi[cc.customerId] || 0) + 1;
+<pre class="language-text">  const OrdersgroupByCustomer = Object.entries(orders.reduce((groups, cc) =&gt; {
+  groups[cc.customerId] = (groups[cc.customerId] || 0) + 1;
   return gruppi;
   }, {}))
   .map(kk =&gt; new Object({ c: kk[0], n: kk[1] })).sort((a, b) =&gt; b.n - a.n)
@@ -557,55 +550,57 @@ return gruppi;<br>
 </li>
 </ul>
 <hr>
-<h3 class="mume-header" id="altre-funzioni-tipiche-di-hadoop">ALTRE FUNZIONI TIPICHE DI HADOOP</h3>
+<h3 class="mume-header" id="further-typical-hadoop-functions">FURTHER TYPICAL HADOOP FUNCTIONS</h3>
 
 <h4 class="mume-header" id="binning">BINNING</h4>
 
-<h5 class="mume-header" id="suddivide-i-record-in-base-ad-un-criterio">Suddivide i record in base ad un criterio</h5>
+<h5 class="mume-header" id="splits-records-based-on-a-criterion">Splits records based on a criterion</h5>
 
-<h6 class="mume-header" id="esempio-suddividere-i-prodotti-in-4-categorie-in-base-al-prezzo">Esempio: suddividere i prodotti in 4 categorie in base al prezzo</h6>
+<h6 class="mume-header" id="example-split-products-into-4-categories-based-on-price">Example: split products into 4 categories based on price</h6>
 
 <ul>
 <li>
 <p>JS</p>
-<pre class="language-text">  const categ = prodotti.reduce((cate, cc) =&gt; {
+<pre class="language-text">  const categ = products.reduce((cate, cc) =&gt; {
   let pr = parseInt(cc.unitPrice)
-  if (pr &lt; 4) cate[&quot;molto_economici&quot;].push(cc)
-  else if (pr &lt; 10) cate[&quot;economici&quot;].push(cc)
-  else if (pr &lt; 50) cate[&quot;costosi&quot;].push(cc)
-  else cate[&quot;lusso&quot;].push(cc)
+  if (pr &lt; 4) cate[&quot;very_cheap&quot;].push(cc)
+  else if (pr &lt; 10) cate[&quot;cheap&quot;].push(cc)
+  else if (pr &lt; 50) cate[&quot;expensive&quot;].push(cc)
+  else cate[&quot;luxury&quot;].push(cc)
   return cate;
-  }, { molto_economici: [], economici: [], costosi: [], lusso: [] })
+  }, { very_cheap: [], cheap: [], expensive: [], luxury: [] })
 </pre>
 </li>
 </ul>
-<h4 class="mume-header" id="indice-invertito">INDICE INVERTITO</h4>
+<hr>
+<h4 class="mume-header" id="inverted-index">INVERTED INDEX</h4>
 
-<h4 class="mume-header" id="si-usa-per-creare-strutture-tipo-dizionario">Si usa per creare strutture tipo dizionario</h4>
+<h4 class="mume-header" id="used-to-create-dictionary-like-structures">Used to create dictionary-like structures</h4>
 
-<h5 class="mume-header" id="esempio-1-per-ogni-mese-fornire-lelenco-dei-clienti-che-hanno-effettuato-almeno-un-ordine">Esempio 1: per ogni mese fornire l&apos;elenco dei clienti che hanno effettuato almeno un ordine</h5>
+<h5 class="mume-header" id="example-1-for-each-month-provide-the-list-of-the-customers-who-placed-at-least-one-order">Example 1: for each month, provide the list of the customers who placed at least one order</h5>
 
 <ul>
 <li>
 <p>JS</p>
-<pre class="language-text">  const invIndex = ordini.reduce((mesi, ord) =&gt; {
-  let anno=new Date(ord.orderDate).getFullYear()
-  let mese=new Date(ord.orderDate).getMonth()
-  let key=mese+&quot;-&quot;+anno
-  mesi[key] = (mesi[key] || new Set()).add(ord.customerId);
-  return mesi;
+<pre class="language-text">  const invIndex = orders.reduce((months, ord) =&gt; {
+  let year=new Date(ord.orderDate).getFullYear()
+  let month=new Date(ord.orderDate).getMonth()
+  let key=month+&quot;-&quot;+year
+  months[key] = (months[key] || new Set()).add(ord.customerId);
+  return months;
   }, {})
 </pre>
 </li>
 </ul>
-<h5 class="mume-header" id="esempio-2-per-ogni-cliente-fornire-le-date-degli-ordini">Esempio 2: per ogni cliente fornire le date degli ordini</h5>
+<hr>
+<h5 class="mume-header" id="example-2-for-each-customer-provide-all-the-orders-dates">Example 2: for each customer provide all the orders dates</h5>
 
 <ul>
 <li>
 <p>JS</p>
-<pre class="language-text">  const invIndex2 = ordini.reduce((date_ordini, cc) =&gt; {
-  date_ordini[cc.customerId] = (date_ordini[cc.customerId] || new Set()).add(cc.orderDate.substr(0,10));
-  return date_ordini;
+<pre class="language-text">  const invIndex2 = orders.reduce((order_dates, cc) =&gt; {
+  order_dates[cc.customerId] = (order_dates[cc.customerId] || new Set()).add(cc.orderDate.substr(0,10));
+  return order_dates;
   }, {})    
 </pre>
 </li>
@@ -613,25 +608,25 @@ return gruppi;<br>
 <hr>
 <h3 class="mume-header" id="joins">JOINS</h3>
 
-<h4 class="mume-header" id="combinare-due-o-pi%C3%B9-tabelle-che-si-relazionano-attraverso-una-o-pi%C3%B9-colonne">Combinare due o pi&#xF9; tabelle che si relazionano attraverso una o pi&#xF9; colonne</h4>
+<h4 class="mume-header" id="used-to-combine-two-or-more-tables-that-relate-through-one-or-more-columns">Used to combine two or more tables that relate through one or more columns</h4>
 
-<h4 class="mume-header" id="left-outer-join-_filtra-tutti-i-valori-della-prima-tabella-anche-se-non-hanno-corrispondenza-nella-seconda-tabella_">LEFT OUTER JOIN: <em>filtra tutti i valori della prima tabella anche se non hanno corrispondenza nella seconda tabella</em></h4>
+<h4 class="mume-header" id="left-outer-join-_filters-all-the-values-in-the-first-table-even-if-they-dont-match-in-the-second-table_">LEFT OUTER JOIN: <em>filters all the values in the first table even if they don&apos;t match in the second table</em></h4>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT * 
-  FROM prodotti
-  LEFT JOIN categorie
-  ON prodotti.categoryId = categorie.id;
+  FROM products
+  LEFT JOIN categories
+  ON products.categoryId = categories.id;
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const left_join = prodotti.reduce((loj, pp) =&gt; {
-  let lookup_categoria = categorie.filter(cc =&gt; pp.categoryId == cc.idCat);
+<pre class="language-text">  const left_join = products.reduce((loj, pp) =&gt; {
+  let lookup_cat = categories.filter(cc =&gt; pp.categoryId == cc.idCat);
   let union_rec
-  if (lookup_categoria.length) union_rec = { ...pp, ...lookup_categoria[0] }; else union_rec = pp;
+  if (lookup_cat.length) union_rec = { ...pp, ...lookup_cat[0] }; else union_rec = pp;
   loj.push(union_rec)
   return loj;
   }
@@ -640,25 +635,23 @@ return gruppi;<br>
 </li>
 </ul>
 <hr>
-<h4 class="mume-header" id="right-outer-join-_conserva-tutti-i-valori-della-seconda-tabella-anche-se-non-hanno-corrispondenza-nella-prima_">RIGHT OUTER JOIN: <em>conserva tutti i valori della seconda tabella anche se non hanno corrispondenza nella prima</em></h4>
-
-<h5 class="mume-header" id="_la-right-outer-join-%C3%A8-equivalente-alla-left-outer-join-scambiando-le-tabelle_"><em>la Right Outer Join &#xE8; equivalente alla Left Outer Join scambiando le tabelle</em></h5>
+<h4 class="mume-header" id="right-outer-join-_retains-all-the-values-from-the-second-table-even-if-they-dont-match-the-first_">RIGHT OUTER JOIN: <em>retains all the values from the second table even if they don&apos;t match the first</em></h4>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT * 
-  FROM categorie
-  LEFT OUTER JOIN prodotti
-  ON categorie.id= prodotti.categoryId;
+  FROM categories
+  LEFT OUTER JOIN products
+  ON categories.id= products.categoryId;
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text"> const right_join = categorie.reduce((roj, cc) =&gt; {
- let lookup_prodotti = prodotti.filter(pp =&gt; pp.categoryId == cc.idCat);
- if (lookup_prodotti.length == 0) roj.push(cc); else {
- lookup_prodotti.map(v =&gt; {
+<pre class="language-text"> const right_join = categories.reduce((roj, cc) =&gt; {
+ let lookup_prod = products.filter(pp =&gt; pp.categoryId == cc.idCat);
+ if (lookup_prod.length == 0) roj.push(cc); else {
+ lookup_prod.map(v =&gt; {
  let union_rec = { ...cc, ...v }
  roj.push(union_rec)
  })
@@ -671,21 +664,21 @@ return gruppi;<br>
 <hr>
 <h4 class="mume-header" id="inner-join-natural-join">INNER JOIN (NATURAL JOIN)</h4>
 
-<h5 class="mume-header" id="_inner-join-e-natural-join-sono-molto-simili-cambia-solo-il-numero-di-colonne-restituite_"><em>Inner Join e Natural Join sono molto simili: cambia solo il numero di colonne restituite</em></h5>
+<h5 class="mume-header" id="_inner-join-and-natural-join-are-very-similar-only-the-number-of-columns-returned-changes_"><em>Inner Join and Natural Join are very similar - only the number of columns returned changes</em></h5>
 
-<h5 class="mume-header" id="_con-questa-soluzione-facciamo-prima-il-prodotto-cartesiano-tra-le-due-tabelle-e-poi-filtriamo-solo-i-record-con-i-valori-della-colonna-cerniera-uguali_"><em>Con questa soluzione facciamo prima il prodotto cartesiano tra le due tabelle e poi filtriamo solo i record con i valori della colonna &quot;cerniera&quot; uguali</em></h5>
+<h5 class="mume-header" id="_in-this-solution-we-first-make-the-cartesian-product-between-the-two-tables-and-then-filter-only-the-records-with-the-same-hinge-column-values_"><em>In this solution we first make the Cartesian product between the two tables and then filter only the records with the same &quot;hinge&quot; column values</em></h5>
 
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text">  SELECT * 
-  FROM prodotti, categorie
-  WHERE prodotti.categoryId = categorie.id;
+  FROM products, categories
+  WHERE products.categoryId = categorie.id;
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  let prod_cart = [].concat(...prodotti.map(pp =&gt; categorie.map(cc =&gt; Object.assign({}, { ...pp, ...cc }))))
+<pre class="language-text">  let prod_cart = [].concat(...products.map(pp =&gt; categories.map(cc =&gt; Object.assign({}, { ...pp, ...cc }))))
   
   let natjoin = prod_cart.filter(f =&gt; (f.categoryId == f.idCat))
 </pre>
@@ -693,61 +686,60 @@ return gruppi;<br>
 </ul>
 <hr>
 <h3>SUBQUERY</h3>
-<h5>Esempio 1: elenco dei clienti che hanno fatto almeno un ordine</h5>
+<h5>Example 1: list all customers who have placed at least one order</h5>
 <ul>
 <li>
 <p>SQL</p>
 <pre class="language-text"> SELECT *
- FROM clienti
- WHERE id IN ( SELECT customerId FROM ordini)
+ FROM customers
+ WHERE id IN ( SELECT customerId FROM orders)
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const elenco_clienti=clienti.filter(cl=&gt;ordini.filter(oo=&gt;oo.customerId=cl.idCli))
+<pre class="language-text">  const customer_list=customers.filter(cl=&gt;orders.filter(oo=&gt;oo.customerId=cl.idCli))
 </pre>
 </li>
 </ul>
 <hr>
-<h5>Esempio 2: elenco dei prodotti che sono stati ordinati almeno una volta in quantit&#xE0; superiore a 100 unit&#xE0;</h5>
+<h5>Example 2: list all products that have been ordered at least once in quantities greater than 100 units</h5>
 <ul>
 <li>
 <p>SQL</p>
-<pre class="language-text"> SELECT DISTINCT idProd as id, nome as descr
- FROM prodotti 
- WHERE productId IN (SELECT productId from dettagli WHERE quantity&gt;100)
+<pre class="language-text"> SELECT DISTINCT idProd as id, name as descr
+ FROM products 
+ WHERE productId IN (SELECT productId from details WHERE quantity&gt;100)
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  let prod=dettagli.map(d=&gt;d.prodotti.flat()).reduce((acc, val) =&gt; acc.concat(val), []).
+<pre class="language-text">  let prod=details.map(d=&gt;d.products.flat()).reduce((acc, val) =&gt; acc.concat(val), []).
   filter(v=&gt;v.quantity&gt;100).map(pp=&gt;pp.productId)
-  let proj=prodotti.filter(pp=&gt;prod.includes(pp.idProd))
+  let proj=products.filter(pp=&gt;prod.includes(pp.idProd))
   .map(p=&gt;new Object({&quot;id&quot;:p.idProd, &quot;descr&quot;:p.name}))
 </pre>
 </li>
 </ul>
 <hr>
-<h5>Esempio 3: elenco degli ordini che comprendono prodotti di almeno due categorie diverse</h5>
+<h5>Example 3: list of orders that include products of at least two different categories</h5>
 <ul>
 <li>
 <p>SQL</p>
-<pre class="language-text"> SELECT Detttagli.OrderId, (SELECT COUNT( DISTINCT categoryId)) as ncat 
- FROM Dettagli, Prodotti
- WHERE Dettagli.ProductId=Prodotti.ProductId
- GROUP BY Dettagli.OrderId
+<pre class="language-text"> SELECT Details.OrderId, (SELECT COUNT( DISTINCT categoryId)) as ncat 
+ FROM Details, Products
+ WHERE Details.ProductId=Products.ProductId
+ GROUP BY Details.OrderId
  HAVING ncat&gt;1
 </pre>
 </li>
 <li>
 <p>JS</p>
-<pre class="language-text">  const groupByCat = (dettagli.reduce((gruppi, cc) =&gt; {
+<pre class="language-text">  const groupByCat = (details.reduce((groups, cc) =&gt; {
   var prod=[]
-  cc.prodotti.forEach(pp=&gt;prod.push(rispc[pp.productId]))
-  let diversi=new Set(prod).size
-
-  if(diversi&gt;1) gruppi.push(new Object({&quot;ord&quot;:cc.orderId, &quot;det&quot;:prod.length, &quot;div&quot;:diversi}));
-  return gruppi;
+  cc.products.forEach(pp=&gt;prod.push(rispc[pp.productId]))
+  let diversi=new Set(prod).size 
+  if(diversi&gt;1) groups.push(new Object({&quot;ord&quot;:cc.orderId, &quot;det&quot;:prod.length, &quot;div&quot;:diversi}));
+  return groups;
   }, []))
 </pre>
 </li>
